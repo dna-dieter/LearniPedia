@@ -72,4 +72,19 @@ dezentrale Rechenknoten und Multiplikatoren für die Reichweite.
 
 ## Lizenz
 
-MIT — siehe [LICENSE](LICENSE).
+**[CC BY-SA 4.0](LICENSE)** — Creative Commons Namensnennung, Weitergabe unter
+gleichen Bedingungen.
+
+Du darfst den Text kopieren, verändern, übersetzen und weitergeben, auch
+kommerziell. Zwei Bedingungen: Nennung der Quelle, und Bearbeitungen müssen unter
+derselben Lizenz stehen. Damit bleibt jede Weiterentwicklung dieses Manifests
+gemeinfrei zugänglich und kann nicht in ein geschlossenes Produkt überführt werden.
+
+Dies ist dieselbe Lizenz, unter der die Texte der Wikipedia stehen — dem Vorbild,
+auf das sich dieses Projekt beruft.
+
+> **Hinweis für später:** CC-Lizenzen sind für Prosa gedacht, nicht für Quellcode.
+> Sobald dieses Repository Software enthält (Container-Definitionen, Skripte,
+> System-Prompts), erhält diese eine eigene Lizenz. Empfehlung dafür: AGPL-3.0,
+> damit auch serverseitig betriebene Abwandlungen ihren Quellcode offenlegen
+> müssen.
