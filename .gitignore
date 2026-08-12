@@ -1,0 +1,19 @@
+# LaTeX-Hilfsdateien
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+build.log
+
+# Build-Artefakt: PDF wird aus Konzept.tex erzeugt
+# und als Release-Asset veroeffentlicht, nicht versioniert.
+*.pdf
+
+# Arbeitsmaterial mit urheberrechtlich geschuetzten Drittinhalten
+transkript_musk_video.txt
+
+# macOS
+.DS_Store

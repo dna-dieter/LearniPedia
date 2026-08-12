@@ -1,0 +1,210 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{a4paper, left=25mm, right=25mm, top=30mm, bottom=30mm}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+
+% Farbdefinitionen für ein modernes Design
+\definecolor{primarycolor}{RGB}{0, 51, 102}
+\definecolor{secondarycolor}{RGB}{102, 102, 102}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primarycolor,
+    filecolor=primarycolor,      
+    urlcolor=primarycolor
+}
+
+\titleformat{\section}{\large\bfseries\color{primarycolor}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{primarycolor}}{\thesubsection}{1em}{}
+
+% Projektdaten
+\title{\textbf{\Huge LearniPedia} \\[0.4em] \Large Das Wikipedia der Bildung -- Manifest \& Rahmenbedingungen}
+\author{\textbf{Projekt-Status:} Funktionaler Prototyp (MVP) \\ 
+\textbf{Infrastruktur:} Dezentral (Hostinger VPS \& Apple Silicon Knoten) \\
+\textbf{Lizenz:} 100\% Open Source (MIT-Lizenz / GitHub) \\
+\textbf{Finanzierung:} Spendenbasiert}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\nopagebreak
+\begin{center}
+    \textit{\large „Bildung ist kein Privileg und kein Marktplatz. Bildung ist ein unantastbares Grundrecht.“}
+\end{center}
+\vspace{1em}
+
+\section{Die Ausgangslage \& Das Problem}
+Das aktuelle staatliche Bildungssystem leidet unter chronischem Lehrermangel, bürokratischer Lähmung und sozialer Ungerechtigkeit. Kommerzielle Tech-Giganten drängen in diese Lücke, missbrauchen Bildungsdaten jedoch zur Profilbildung und erzwingen proprietäre Abhängigkeiten. 
+
+\textbf{LearniPedia} bricht diese Strukturen radikal auf. Es ist das funktionierende, unzensierte und kostenfreie „Wikipedia der Bildung“ -- gesteuert durch Künstliche Intelligenz, validiert durch Pädagogen, betrieben auf einer unzerstörbaren Open-Source-Infrastruktur.
+
+\section{Die Kernarchitektur (Die unumstößlichen Säulen)}
+
+\begin{enumerate}[label=\textbf{\Roman*.}]
+    \item \textbf{Totale Unabhängigkeit von Big Tech:} 
+    LearniPedia nutzt keine kostenpflichtigen oder zensierten Cloud-APIs aus dem Silicon Valley. Das Gehirn der Plattform basiert auf frei zugänglichen Spitzen-Sprachmodellen (z.\,B. DeepSeek-R1 / Llama), die komplett heruntergeladen und physisch auf eigenen, dezentralen Hardware-Knoten (wie privaten Mac minis) betrieben werden. Kein Konzern und kein Staat kann den Zugriff sperren oder Lehrinhalte manipulieren.
+
+    \item \textbf{Kompromissloser Kaskaden-Datenschutz (Zero-Knowledge):} 
+    Für die Registrierung ist ausschließlich eine frei wählbare E-Mail-Adresse erforderlich. Es werden keine Klarnamen, IP-Adressen oder Profildaten erfasst. Jede Anfrage durchläuft zwei automatisierte Filterstufen im RAM:
+    \begin{itemize}[label=--]
+        \item \textbf{Sicherheitscheck (Guardrails):} Algorithmische Blockade von Missbrauch, Schadcode oder emotionaler Manipulation.
+        \item \textbf{Anonymisierungsrunde:} Radikale Filterung personenbezogener Daten aus dem Freitext, \textit{bevor} die Anfrage das Haupt-Sprachmodell erreicht.
+    \end{itemize}
+
+    \item \textbf{Unzerstörbare Infrastruktur (Infrastructure as Code):} 
+    Die Plattform ist über Docker-Container vollkommen modularisiert (Moodle LMS + lokale KI-Schnittstellen). Die gesamte Systemarchitektur liegt als Code öffentlich auf GitHub. Sollte ein Server-Provider unter Druck geraten, kann die gesamte Universität per Skript innerhalb von 30 Minuten an jedem anderen Ort der Erde wieder online geschaltet werden.
+
+    \item \textbf{Frustrationsloses Lernen \& Selbstregulation:} 
+    LearniPedia eliminiert den klassischen Leistungsdruck. Es gibt keine Noten, kein Versagen und kein starres Zeitkorsett.
+    \begin{itemize}[label=--]
+        \item \textbf{Meisterschafts-Prinzip:} Lernende setzen sich ihre Ziele selbst über einen interaktiven Wissens-Stammbaum (Knowledge Graph). Die KI fungiert als unendlich geduldiger, sokratischer Tutor.
+        \item \textbf{Schutz vor externem Druck:} Lernende bestimmen ein tägliches Zeitbudget. Ist dieses erschöpft, sperrt das System weitere Fachfragen softwareseitig. Da das System anonym ist, hebelt es das „Multi-Account-Dilemma“ durch Selbstregulation aus: Wer Accounts wechselt, verliert seinen gesamten Fortschritt.
+    \end{itemize}
+
+    \item \textbf{Unbestechliche, internationale Validierung:} 
+    LearniPedia strebt keine träge staatliche Akkreditierung an. Die Leistungsüberprüfung erfolgt über dynamische KI-Fachgespräche in Echtzeit, anonymisierte Peer-Reviews durch fortgeschrittene Studierende sowie die gezielte Vorbereitung auf globale, herstellerunabhängige Fachzertifikate (z.\,B. IEEE, Linux Foundation) und greifbaren „Proof of Work“ via GitHub.
+
+    \item \textbf{Das Wikipedia-Finanzierungsmodell:} 
+    Die Nutzung ist für alle Studierenden weltweit zu 100\% kostenfrei. Die Infrastruktur wird rein über freiwillige Kleinstspenden der Community (inklusive zensurresistenter Kryptowährungen wie Monero/Bitcoin) getragen.
+\end{enumerate}
+
+\section{Internationaler Standard statt nationalem PISA-Versagen}
+Falls staatliche Behörden die Struktur von LearniPedia bemängeln, verweisen wir auf die harten Fakten der internationalen Bildungsforschung:
+\begin{itemize}
+    \item \textbf{Das PISA-Zeugnis:} Die jüngsten PISA-Ergebnisse stellen dem deutschen Schulsystem das schlechteste Zeugnis seiner Geschichte aus. Das staatliche System hat nachweislich versagt, den internationalen Mindeststandard zu sichern. LearniPedia orientiert sich daher an weltweiten Spitzen-Benchmarks.
+    \item \textbf{Das Brechen der sozialen Selektion:} PISA beweist chronisch, dass der Bildungserfolg in Deutschland stark von der Herkunft abhängt. Durch den anonymen Zugang eliminiert LearniPedia jede Form von sozialer oder finanzieller Diskriminierung ab Sekunde eins.
+    \item \textbf{Lösung des Digitalisierungs-Desasters:} Während staatliche Schulen bei der digitalen Infrastruktur gelähmt sind, liefert LearniPedia funktionierende Spitzentechnologie im Weltklasse-Format direkt auf das Endgerät der Schüler.
+\end{itemize}
+
+\section{Geschwindigkeit: Bandbreite ist die falsche Metrik}
+Die staatliche Bildungsdebatte hat sich auf eine Frage versteift, die für Lernen kaum relevant ist: Wann kommt das Gigabit in die Schule? Während Deutschland Gräben zieht -- der FTTH-Anteil liegt im OECD-Vergleich deutlich unter dem Mittelwert\footnote{OECD-Breitbandstatistik; Aufbereitung unter \url{https://de.statista.com/themen/10276/glasfaseranschluesse/}} -- verschiebt sich die Konnektivität global längst auf parallele Pfade. Die LEO-Konstellation von Starlink umfasst rund 10.900 aktive Satelliten und über 12 Millionen Kund*innen (Stand Juni 2026)\footnote{\url{https://en.wikipedia.org/wiki/Starlink}}.
+
+\subsection{Der Kapazitätssprung ist keine Ankündigung mehr}
+Die Größenordnung dieser Verschiebung wird regelmäßig unterschätzt. Am 24.\,Juli 2026 hat SpaceX auf Starship-Testflug 13 erstmals 20 Satelliten der neuen Generation Starlink V3 ausgesetzt\footnote{\url{https://spaceflightnow.com/2026/07/16/live-coverage-spacex-to-deploy-first-starlink-v3-satellites-on-suborbital-starship-super-heavy-flight/}}. Die Hardware ist damit nicht mehr Roadmap, sondern im Orbit erprobt:
+\begin{itemize}[label=--]
+    \item \textbf{Pro Satellit:} rund 1\,Tbit/s Downlink und 160\,Gbit/s Uplink -- etwa zehnfache Downlink- und über zwanzigfache Uplink-Kapazität gegenüber den bisherigen V2-Mini-Satelliten\footnote{\url{https://www.lightreading.com/satellite/starship-completes-first-test-flight-with-starlink-v3-satellites}}.
+    \item \textbf{Pro Start:} 60 V3-Satelliten je Starship-Flug, also etwa 60\,Tbit/s zusätzliche Netzkapazität -- mehr als das Zwanzigfache eines Falcon-9-Starts mit V2 Mini\footnote{\url{https://www.pcmag.com/news/spacex-offers-new-look-at-v3-starlink-satellite-for-gigabit-speeds}}.
+    \item \textbf{Aggregiert:} Derzeit sind knapp 11.000 Satelliten im Orbit. Als Ziel für V3 und die Folgegenerationen nennt SpaceX 100.000 Satelliten\footnote{Unternehmensgespräch SpaceX, August 2026. Deutschsprachige Übersetzung: \url{https://www.youtube.com/watch?v=Hl895UEbxBk}. Sinngemäße Wiedergabe; die Formulierungen entstammen einer Kanalübersetzung, nicht einem amtlichen Protokoll.}. Zehnfache Kapazität je Satellit bei etwa neunfacher Stückzahl ergibt eine Steigerung der Gesamtnetzkapazität in der Größenordnung von Faktor 100. Die Kapazität je Satellit ist spezifiziert und geflogen; die Gesamtzahl bleibt eine Zielgröße, deren Startkadenz betrieblich noch nicht nachgewiesen ist.
+\end{itemize}
+
+\noindent Diese Entwicklung entlastet LearniPedia nicht, sie bestätigt seine Bauweise. Cloudflare rechnet damit, dass KI-Datenverkehr binnen fünf Jahren rund tausendmal größer sein wird als der von Menschen erzeugte Internetverkehr. Wer künftig Bandbreite braucht, konkurriert also mit Maschinen. Eine Plattform, die pro Lernenden Kilobit statt Megabit benötigt, gewinnt in diesem Umfeld an relativer Robustheit.
+
+\noindent Für LearniPedia ist dieser Wettlauf strategisch irrelevant, und genau darin liegt der Vorsprung:
+
+\begin{itemize}[label=--]
+    \item \textbf{Die Rechenlast liegt auf dem Knoten, nicht auf der Leitung:} Weil das Sprachmodell lokal auf eigener Hardware arbeitet, überträgt die Leitung ausschließlich Text. Ein sokratischer Tutor-Dialog benötigt einige Kilobit pro Sekunde. Kein 4K-Vorlesungsstreaming, keine Cloud-IDE im Browser, kein permanenter Telemetrie-Rückkanal.
+    \item \textbf{Lauffähig auf dem, was vorhanden ist:} Gedrosselter Mobilfunk, ein geteilter Dorfanschluss, ein Satellitenlink, im Extremfall ein lokales Mesh-Netz. LearniPedia ist betriebsbereit, bevor der Bagger anrückt, und bleibt betriebsbereit, wenn er nie kommt.
+    \item \textbf{Redundanz statt Technologie-Monokultur:} Glasfaser, Mobilfunk und LEO-Satellit sind austauschbare Zulieferer, keine Abhängigkeiten. Der Ausfall eines Pfades bedeutet Umzug eines Knotens, nicht Stillstand des Systems.
+    \item \textbf{Kein Ersatz eines Monopols durch ein anderes:} Je überlegener die Satellitenkapazität wird, desto größer die Versuchung, sich auf sie zu verlassen. Wir tun es nicht -- und die Zielsetzung des Anbieters selbst ist das Argument dafür: Musk hält es für möglich, dass langfristig über 90\,\% des gesamten Internetverkehrs über Starlink laufen\footnote{Unternehmensgespräch SpaceX, August 2026.}. Genau diese Konzentration ist das Risiko, nicht die Lösung. Ein privat kontrollierter Dienst ist ebenso abschaltbar wie jede Cloud-API, und die Bodenstationen hängen ihrerseits an terrestrischer Glasfaser. Satellit ist für uns ein Ausweichpfad, niemals ein Fundament, sonst höhlen wir Säule I dieses Dokuments selbst aus.
+\end{itemize}
+
+\noindent Wer Bildung an Infrastruktur-Großprojekte koppelt, wartet Jahrzehnte. Wer sie auf minimale Bandbreite und lokale Rechenleistung auslegt, ist heute weltweit erreichbar.
+
+\section{Der EU-KI-Act: Nicht von der Technik überholt, sondern politisch ausgebremst}
+Es wäre bequem zu behaupten, die technische Entwicklung habe den KI-Act überrollt. Wir argumentieren nicht mit falschen Fakten. Der Act ist bewusst technologieneutral gebaut: Er reguliert Anwendungszwecke und Verantwortlichkeiten, nicht Modellarchitekturen. Eine neue LLM-Generation macht ihn deshalb nicht gegenstandslos. Verzögert wurde er nicht von der Technik, sondern vom Gesetzgeber selbst -- der am 27.\,Juli 2026 in Kraft getretene „AI Omnibus“\footnote{\url{https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force}} verschiebt die Pflichten für Hochrisiko-Systeme nach Anhang III vom 2.\,August 2026 auf den 2.\,Dezember 2027, jene für eingebettete Systeme nach Anhang I auf August 2028\footnote{Übersicht der geänderten Fristen: \url{https://fpf.org/blog/the-ai-act-implementation-timeline-what-changes-under-the-ai-omnibus/}}.
+
+\subsection{Die unbequeme Tatsache, die wir offen benennen}
+Bildung ist in Anhang III Nummer 3 ausdrücklich als Hochrisiko-Bereich gelistet. Erfasst sind unter anderem die Bewertung von Lernergebnissen und die Bestimmung des angemessenen Bildungsniveaus einer Person\footnote{\url{https://artificialintelligenceact.eu/annex/3/}}. LearniPedia tut beides: über dynamische KI-Fachgespräche und über den Knowledge Graph. Wir sind damit aller Wahrscheinlichkeit nach Anbieter eines Hochrisiko-Systems. Der Open-Source-Charakter befreit uns davon nicht, denn die Ausnahme für frei verfügbare Modelle betrifft Anbieter von Allzweckmodellen, nicht Betreiber von Hochrisiko-Anwendungen. Wer das Gegenteil in ein Konzept schreibt, verliert seine Glaubwürdigkeit bei der ersten Prüfung.
+
+\subsection{Warum LearniPedia den Act architektonisch übererfüllt}
+Konformität ist bei uns nicht nachträglich dokumentiert, sondern in die Bauweise eingelassen:
+\begin{itemize}[label=--]
+    \item \textbf{Datenminimierung als Architektur, nicht als Prozess:} Es existieren keine personenbezogenen Daten, die missbraucht, geleakt oder herausgegeben werden könnten.
+    \item \textbf{Transparenz über das gesetzliche Maß hinaus:} Modellgewichte, System-Prompts und die vollständige Infrastruktur liegen öffentlich auf GitHub. Der Act verlangt Dokumentation gegenüber Behörden, wir liefern Nachprüfbarkeit gegenüber der Öffentlichkeit.
+    \item \textbf{Menschliche Aufsicht (Art.\,14):} Die Pädagogen als Didaktik-Lenker mit Audit-Funktion sind genau das geforderte Kontrollorgan, kein nachgelagertes Feigenblatt.
+    \item \textbf{Kein Profiling:} Es entstehen keine Herkunfts-, Verhaltens- oder Leistungsprofile über Sitzungen hinweg.
+    \item \textbf{Verbotene Praktiken sind konstruktiv ausgeschlossen:} Keine Emotionserkennung an Lernenden (Art.\,5\,(1)(f)), keine Prüfungsüberwachung. Die Guardrails blockieren Manipulationsversuche, ohne emotionale Zustände zu klassifizieren.
+\end{itemize}
+
+\subsection{Unsere eigentliche Kritik: Regulierung als Burggraben}
+Wir wenden uns nicht gegen die Ziele des Act, sondern gegen seine Kostenstruktur. Konformitätsbewertung, CE-Kennzeichnung, Registrierung und Post-Market-Monitoring sind für die Compliance-Abteilung eines Konzerns eine Budgetzeile, für ein spendenfinanziertes Kollektiv existenzbedrohend. Regulierung, die nur von Monopolisten bezahlbar ist, schützt am Ende Monopole -- und genau das ist der Mechanismus, gegen den LearniPedia angetreten ist.
+
+\subsection{Offener Punkt, den wir nicht verschweigen}
+Die Protokollierungs- und Nachvollziehbarkeitspflichten für Hochrisiko-Systeme (Art.\,12) stehen in direkter Spannung zu unserer Zero-Knowledge-Architektur. Wir lösen diesen Konflikt nicht durch Ignorieren, sondern durch aggregierte, personenfrei geführte Audit-Protokolle -- und stellen die Frage bewusst zur öffentlichen Diskussion, statt sie bis zur ersten Aufsichtsanfrage zu vertagen.
+
+\section{Radikale Mehrsprachigkeit \& Aufbrechen lokaler Integrations-Hürden}
+Im Gegensatz zur europäischen Fixierung auf bürokratische Sprach- und Integrationsauflagen denkt LearniPedia Bildung global und funktional nach internationalem Vorbild. Was zählt, ist das Können.
+\begin{itemize}
+    \item \textbf{Echtzeit-Übersetzung des Weltwissens:} Die genutzten freien Spitzen-LLMs beherrschen Dutzende Sprachen fließend. Ein Student kann komplexe Inhalte in seiner Muttersprache lernen, während das System parallel internationale Fachbegriffe vermittelt.
+    \item \textbf{Der unermüdliche Deutsch-Tutor:} Für Lernende, die die deutsche Sprache erlernen möchten, bietet die lokale KI einen Sprachlehrer mit unendlicher Geduld. Ohne Scham vor Fehlern, ohne überfüllte Integrationskurse und ohne Wartezeiten können Menschen weltweit Deutsch auf muttersprachlichem Niveau trainieren.
+\end{itemize}
+
+\section{Taktrate statt Prognose: Die Unabhängigkeit von staatlichen Zyklen}
+LearniPedia muss dem technischen Fortschritt in dessen eigenem Tempo folgen können. Genau das ist an staatliche Bildungsverwaltung strukturell nicht anschlussfähig -- und dieser Befund braucht keine Zukunftsprognose, um zu tragen.
+
+\subsection{Eine Zahl, die wir bewusst nicht verwenden}
+Es kursiert die Behauptung, KI werde ihre Intelligenz bis Ende 2027 um den Faktor einer Milliarde steigern. Diese Zahl verwenden wir nicht, weil sie zwei getrennte Aussagen vermischt. Im SpaceX-Unternehmensgespräch vom August 2026 sagt Elon Musk zweierlei:
+\begin{itemize}[label=--]
+    \item \textbf{Zur Intelligenz:} Die \textit{Menge} digitaler Intelligenz werde jene biologischer Intelligenz voraussichtlich um mehr als den Faktor einer Billion übersteigen; der Faktor einer Milliarde sei die vergleichsweise sichere Schätzung. Begründet wird das über die nutzbar gemachte Energie der Sonne, ausdrücklich im Rahmen der Kardaschow-Skala. \textbf{Ein Datum nennt er dafür nicht.} Es handelt sich um einen zivilisatorischen Zeithorizont, nicht um eine Jahresfrist.
+    \item \textbf{Zu Ende 2027:} Angestrebt sind 10\,Gigawatt KI-Rechenleistung, etwa das Zehnfache des bisherigen Aufbaus, verknüpft mit einer Umsatzerwartung von 300 bis 500 Milliarden Dollar jährlich\footnote{Unternehmensgespräch SpaceX, August 2026; Berichterstattung: \url{https://www.teslarati.com/spacexs-next-trillion-dollar-bet-has-nothing-to-do-with-rockets-musk-tells-staff/}}. Das ist eine Kapazitäts- und Umsatzgröße, keine Intelligenzkennzahl.
+\end{itemize}
+
+\noindent Aus beidem zusammen wird gelegentlich „Faktor Milliarde bis Ende 2027“. Diese Verknüpfung stammt nicht von Musk. Hinzu kommt die Belastbarkeit solcher Fristen generell: Im April 2024 wurde übermenschliche KI „für nächstes Jahr“ angekündigt\footnote{\url{https://www.theguardian.com/technology/2024/apr/09/elon-musk-predicts-superhuman-ai-will-be-smarter-than-people-next-year}}.
+
+Vor allem aber: Intelligenz hat keine Maßeinheit. Rechenleistung lässt sich in Größenordnungen angeben, Fähigkeit skaliert nicht linear mit ihr. Ein Multiplikator ohne Einheit ist Rhetorik, kein Argument. Ein Bildungskonzept, das seine Existenzberechtigung auf die Prognose eines einzelnen Unternehmers stützt, wird mit dieser Prognose fallen.
+
+\subsection{Das belastbare Argument: Zykluszeit}
+Der entscheidende Unterschied ist nicht Intelligenz, sondern Taktrate:
+\begin{itemize}[label=--]
+    \item \textbf{LearniPedia:} Ein Generationswechsel des Sprachmodells bedeutet neue Gewichte laden, System-Prompts nachziehen, Container neu starten. Zeithorizont: Tage.
+    \item \textbf{Staatliche Systeme:} Bildungsplanrevision, länderübergreifende Abstimmung, Schulbuchzulassung, Lehrkräftefortbildung, Beschaffungsrecht, Abschreibungszyklen auf Hardware. Zeithorizont: Jahre bis Legislaturperioden.
+    \item \textbf{Das Fork-Recht:} Biegt LearniPedia inhaltlich falsch ab, kann jede Gruppe die Plattform per Fork übernehmen und korrigieren. Ein staatliches Curriculum kennt keinen Fork, nur den Instanzenweg.
+\end{itemize}
+
+\noindent Diese Differenz ist keine Prognose, sondern beobachtbare Gegenwart. Sie bleibt bestehen, ganz unabhängig davon, wie schnell sich KI-Fähigkeiten tatsächlich entwickeln.
+
+\subsection{Was Skalierung pädagogisch bedeutet}
+Benjamin Bloom wies 1984 nach, dass Einzelbetreuung mit Mastery Learning die Leistung um bis zu zwei Standardabweichungen hebt -- der durchschnittlich tutorierte Lernende übertraf rund 98\,\% der konventionell unterrichteten Vergleichsgruppe. Bloom selbst hielt Eins-zu-eins-Betreuung für zu kostspielig, um sie gesellschaftlich im großen Maßstab zu tragen\footnote{Systematische Aufarbeitung: \url{https://nintil.com/bloom-sigma/}}. Genau diese Kostenschranke löst LearniPedia auf: Ein lokal betriebenes Sprachmodell liefert Einzelbetreuung zu Grenzkosten nahe null, in beliebiger Zahl, ohne Wartezeit.
+
+Redlicherweise: Die Effektstärke von zwei Sigma wird in der Forschung kontrovers diskutiert und dürfte niedriger liegen\footnote{Zur Debatte: \url{https://www.educationnext.org/two-sigma-tutoring-separating-science-fiction-from-science-fact/}}. Die Richtung des Befundes ist unstrittig, die exakte Größe nicht. Wir argumentieren mit der Richtung.
+
+\subsection{Wovon wir uns abgrenzen}
+Wir behaupten nicht, Universitäten seien im Sinne von Wissen und Intelligenz wertlos geworden. Diese Position wäre nicht nur falsch, sie würde LearniPedia selbst zerlegen. Universitäten \textit{erzeugen} Wissen -- über Labore, Experimente, Grundlagenforschung und Peer Review. Ohne diese Produktion gibt es keine Inhalte, die ein Sprachmodell vermitteln könnte; jedes LLM ist ein Verwerter fremder Erkenntnisleistung, kein Ersatz für sie.
+
+Was LearniPedia auflöst, ist enger und dafür präzise: das Monopol auf \textit{Wissensvermittlung} und die \textit{Zugangskontrolle} dazu. Die Knappheit, die den Hörsaal einst begründete -- wenige Fachleute, deren Zeit rationiert werden muss -- existiert bei der Vermittlung nicht mehr. In der Forschung existiert sie weiterhin, und deshalb bleibt auch die menschliche didaktische Aufsicht in diesem Projekt unverzichtbar.
+
+\section{Wissen als permanent verfügbare Dienstleistung}
+Wenn sich KI-Fähigkeiten in Monaten statt in Jahrzehnten weiterentwickeln, lautet die entscheidende Frage nicht, ob Bildung mithält, sondern in welche \textit{Form} sie gebracht wird. Unsere Antwort: Wissensvermittlung hört auf, ein terminiertes und rationiertes Gut zu sein, und wird zu einer permanent verfügbaren Dienstleistung. Kein Semesterbeginn, keine Bewerbungsfrist, keine Zulassungsgrenze, keine Öffnungszeit, keine Warteliste.
+
+\subsection{Freiwilligkeit als Prinzip}
+Niemand muss sich weiterbilden. Wer es aber will, darf daran nicht gehindert werden. Damit kehrt LearniPedia die Beweislast um: Nicht der Lernende weist seine Berechtigung nach, sondern das System schuldet Verfügbarkeit. Konkret entfallen:
+\begin{itemize}[label=--]
+    \item Vorabnachweise jeder Art -- kein Abschluss, kein Numerus clausus, kein Eignungstest.
+    \item Alters-, Herkunfts- und Aufenthaltsprüfungen.
+    \item Zahlungsmittel und damit jede finanzielle Selektion.
+    \item Sprachvoraussetzungen, da Inhalte in der Muttersprache erschlossen werden können.
+    \item Wartezeiten, weil Betreuungskapazität nicht personengebunden ist.
+\end{itemize}
+
+\subsection{Was Freiwilligkeit ausdrücklich nicht bedeutet}
+Der Satz „man muss nicht lernen“ beschreibt unsere Haltung zur Weiterbildung, nicht die Rechtslage für Kinder. In Deutschland gilt eine Schulbesuchspflicht, nicht lediglich eine Bildungspflicht; Hausunterricht als Regelalternative ist in allen sechzehn Ländern untersagt und diese Praxis ist gerichtlich bestätigt\footnote{Überblick zur Rechtslage: \url{https://www.sueddeutsche.de/politik/homeschooling-schulpflicht-deutschland-afd-bildung-li.3461526}}.
+
+LearniPedia ist deshalb \textbf{kein Ersatz für den Schulbesuch und kein Werkzeug zu dessen Umgehung}. Wer es so einsetzt, riskiert Bußgelder und familiengerichtliche Verfahren -- und dieses Risiko trägt die Familie, nicht das Projekt. Wir benennen das aus Verantwortung gegenüber unseren Nutzenden, nicht aus Rücksicht auf Behörden. Unser Feld ist die Ergänzung zum Unterricht, die Erwachsenen- und Weiterbildung, das nachschulische Lernen und der weltweite Zugang für alle, die gar keine Bildungseinrichtung erreichen.
+
+\subsection{Warum Verfügbarkeit allein nicht genügt}
+Der stärkste Einwand gegen dieses Konzept ist empirisch belegt, deshalb führen wir ihn selbst an. MOOCs boten ab 2012 genau das, was hier versprochen wird: freien Zugang zu Lehrveranstaltungen auf Spitzenniveau. Die Abschlussquoten blieben im Bereich von 5 bis 10\,\% und begünstigten Teilnehmende mit bereits vorhandener Hochschulbildung\footnote{\url{https://link.springer.com/10.1186/s12909-015-0344-z}}; die Mehrheit der Nutzenden war berufstätig und akademisch vorgebildet\footnote{\url{https://files.eric.ed.gov/fulltext/EJ1045991.pdf}}. Zugang allein hat die soziale Selektion nicht gebrochen, sondern reproduziert.
+
+Der Unterschied liegt nicht in der Verfügbarkeit, sondern in der Interaktionsform. Ein MOOC ist eine Aufzeichnung, also ein Sendekanal. LearniPedia ist ein Dialog. Der in Abschnitt zuvor beschriebene Tutoreneffekt entsteht aus Adaptivität: ein Gegenüber, das nachfragt, das Niveau anpasst, Fehlvorstellungen erkennt und beliebig oft ohne Ungeduld wiederholt. Wer diesen Unterschied nicht macht, verspricht 2026 lediglich erneut, was 2012 versprochen wurde.
+
+Redlicherweise: Ob Adaptivität ausreicht, um Motivations- und Milieubarrieren zu überwinden, ist nicht erwiesen. Wir behaupten es nicht, wir messen es -- anonymisiert und aggregiert, mit öffentlich einsehbarer Methodik.
+
+\subsection{Permanente Verfügbarkeit und Selbstbegrenzung}
+Die permanente Verfügbarkeit und das tägliche Zeitbudget aus Säule IV widersprechen sich nur scheinbar. Verfügbarkeit ist eine Eigenschaft des Systems, Begrenzung eine Entscheidung des Nutzenden. Die Grenze setzt der Lernende selbst, nicht die Institution. Genau darin unterscheidet sich Selbstregulation von Rationierung.
+
+\section{Die Rolle der Pädagogen (Didaktische Leitplanken)}
+Die KI liefert die Skalierung, aber menschliche Pädagogen bilden das ethische und methodische Kontrollorgan. Sie agieren als \textbf{Didaktik-Lenker}: Sie optimieren die System-Prompts auf GitHub für die Lehr-Persönlichkeit der KI, strukturieren barrierefreie Lernpfade im Knowledge Graph und führen anonymisierte Qualitäts-Audits der KI-Antworten durch.
+
+Dass diese Rolle mit steigender Modellleistung wichtiger und nicht überflüssig wird, ist keine Position von KI-Skeptikern. Elon Musk formuliert im SpaceX-Unternehmensgespräch selbst, man werde KI letztlich nicht kontrollieren können, weil sie zu intelligent dafür sei -- und leitet daraus ab, dass es entscheidend darauf ankomme, welche Werte und Überzeugungen man ihr beim Training mitgibt, vergleichbar mit der Erziehung eines hochbegabten Kindes. Genau diese Prägung ist bei LearniPedia keine Firmenentscheidung hinter verschlossenen Türen, sondern liegt als versionierter, öffentlich überprüfbarer Text im Repository. Wer die Lehr-Persönlichkeit der KI verändern will, hinterlässt einen Commit.
+
+\section{Einladung an die Erstunterstützer (Call to Action)}
+Die technische Basis steht. Was wir jetzt brauchen, ist die Reichweite der digitalen Speerspitze und das Fachwissen progressiver Köpfe. Wir suchen pädagogische Pioniere für das didaktische Regelwerk, Tech-Aktivisten für dezentrale Rechenknoten und Multiplikatoren, die dieser Bewegung eine unüberhörbare Stimme verleihen.
+
+\end{document}
