@@ -8,9 +8,8 @@
 *.synctex.gz
 build.log
 
-# Build-Artefakt: PDF wird aus Konzept.tex erzeugt
-# und als Release-Asset veroeffentlicht, nicht versioniert.
-*.pdf
+# Konzept.pdf wird bewusst mitversioniert, damit das Manifest ohne
+# TeX-Installation direkt im Repository lesbar ist.
 
 # Arbeitsmaterial mit urheberrechtlich geschuetzten Drittinhalten
 transkript_musk_video.txt

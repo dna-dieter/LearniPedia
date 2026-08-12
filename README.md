@@ -13,9 +13,10 @@ auf dezentraler Infrastruktur ohne Abhängigkeit von kommerziellen Cloud-Anbiete
 | Datei | Beschreibung |
 |---|---|
 | `Konzept.tex` | Das vollständige Manifest als LaTeX-Quelle |
+| `Konzept.pdf` | Gesetzte Fassung, direkt lesbar ohne TeX-Installation |
 
-Das PDF ist ein Build-Artefakt und wird nicht versioniert. Es erscheint als
-Release-Asset.
+Zusätzlich liegt jede veröffentlichte Fassung als
+[Release](https://github.com/dna-dieter/LearniPedia/releases) bereit.
 
 ## Mitarbeiten ohne lokale TeX-Installation
 
