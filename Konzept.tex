@@ -204,6 +204,25 @@ Die KI liefert die Skalierung, aber menschliche Pädagogen bilden das ethische u
 
 Dass diese Rolle mit steigender Modellleistung wichtiger und nicht überflüssig wird, ist keine Position von KI-Skeptikern. Elon Musk formuliert im SpaceX-Unternehmensgespräch selbst, man werde KI letztlich nicht kontrollieren können, weil sie zu intelligent dafür sei -- und leitet daraus ab, dass es entscheidend darauf ankomme, welche Werte und Überzeugungen man ihr beim Training mitgibt, vergleichbar mit der Erziehung eines hochbegabten Kindes. Genau diese Prägung ist bei LearniPedia keine Firmenentscheidung hinter verschlossenen Türen, sondern liegt als versionierter, öffentlich überprüfbarer Text im Repository. Wer die Lehr-Persönlichkeit der KI verändern will, hinterlässt einen Commit.
 
+\section{LaTeX als Textsatz-Standard}
+Alle Texte von LearniPedia werden in LaTeX gesetzt. Das ist keine Stilfrage, sondern folgt zwingend aus den bisherigen Säulen:
+\begin{itemize}[label=--]
+    \item \textbf{Lizenzfrei und anbieterunabhängig:} LaTeX kostet nichts, gehört niemandem und läuft auf jeder Plattform. Ein Lernender in einer Region ohne Kaufkraft benötigt keine Office-Lizenz, um an Inhalten mitzuarbeiten.
+    \item \textbf{Quelltext statt Binärformat:} LaTeX-Dateien sind reiner Text. Sie lassen sich versionieren, zeilenweise vergleichen und forken -- genau die Eigenschaften, die Säule III für die Infrastruktur fordert, angewandt auf Inhalte. Jede Änderung an einem Lehrtext ist nachvollziehbar und einer Person zuordenbar.
+    \item \textbf{Formelsatz als Betriebsvorteil:} Sprachmodelle geben Mathematik nativ in LaTeX aus. Zwischen Tutor-Antwort und gesetztem Lehrmaterial liegt damit kein Konvertierungsschritt, der Fehler einführen könnte.
+    \item \textbf{Langlebigkeit:} Reiner Text bleibt in Jahrzehnten lesbar. Proprietäre Binärformate sind an die Lebensdauer ihres Herstellers gebunden.
+\end{itemize}
+
+\subsection{Barrierefreiheit: Möglichkeit und offene Aufgabe}
+Historisch war der Einwand gegen LaTeX berechtigt: Erzeugte PDFs waren untagged und für Screenreader kaum erschließbar, mathematische Inhalte praktisch gar nicht. Diese Einschränkung ist seit 2026 aufgehoben. Das LaTeX-Projekt kann auf Basis von PDF\,2.0 automatisch PDF-Dateien erzeugen, die dem Standard PDF/UA-2 entsprechen und deren STEM-Inhalte einschließlich Mathematik tatsächlich zugänglich sind\footnote{\url{https://latex-project.org/news/2026/03/05/PDFA-press/}}.
+
+Redlicherweise ist dies für dieses Dokument noch keine erreichte Eigenschaft, sondern eine Aufgabe: Der vorliegende Satz erfolgte mit TeX\,Live\,2022 und erzeugt noch kein getaggtes PDF. Zudem gehört das hier verwendete Paket \texttt{titlesec} zu jenen, für die Tagging-Unterstützung erst über Vorlagen bereitgestellt wird\footnote{Statusübersicht: \url{https://latex3.github.io/tagging-project/}}. Konkrete Schritte sind daher die Aktualisierung der Toolchain, die Ablösung nicht tagging-fähiger Pakete und eine Validierung gegen PDF/UA-2. Solange das nicht geschehen ist, erheben wir keinen Barrierefreiheitsanspruch für unsere PDF-Ausgabe. Zusätzlich wird jeder Text über HTML ausgegeben, da Screenreader und Vergrößerungssoftware damit verlässlicher umgehen als mit jedem PDF.
+
+\subsection{LaTeX als erste Lerneinheit -- als Angebot, nicht als Bedingung}
+LaTeX eignet sich hervorragend als erste Lerneinheit. Wer es beherrscht, lernt nebenbei strukturiertes Denken, Trennung von Inhalt und Form, Versionierung und Reproduzierbarkeit -- und erwirbt die Verkehrssprache des wissenschaftlichen Publizierens, was einen unmittelbaren berufspraktischen Wert hat. Zugleich ist es die Fähigkeit, mit der Lernende von Konsumenten zu Mitautoren von LearniPedia werden.
+
+Genau deshalb darf es keine Eintrittsbedingung sein. LaTeX hat eine steile Einstiegshürde. Würden wir es Lernenden voranstellen, errichteten wir vor dem Wissen genau jene Schranke, die dieses Projekt abschaffen will, und träfen damit zuerst die Gruppe mit der geringsten Bildungsnähe. LaTeX ist deshalb die erste \textit{angebotene} Lerneinheit und niemals eine Voraussetzung: Lesen und Lernen funktioniert ohne jede Kenntnis davon, Mitschreiben belohnt sie.
+
 \section{Einladung an die Erstunterstützer (Call to Action)}
 Die technische Basis steht. Was wir jetzt brauchen, ist die Reichweite der digitalen Speerspitze und das Fachwissen progressiver Köpfe. Wir suchen pädagogische Pioniere für das didaktische Regelwerk, Tech-Aktivisten für dezentrale Rechenknoten und Multiplikatoren, die dieser Bewegung eine unüberhörbare Stimme verleihen.
 
