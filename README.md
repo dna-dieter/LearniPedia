@@ -17,7 +17,30 @@ auf dezentraler Infrastruktur ohne Abhängigkeit von kommerziellen Cloud-Anbiete
 Das PDF ist ein Build-Artefakt und wird nicht versioniert. Es erscheint als
 Release-Asset.
 
-## Dokument erzeugen
+## Mitarbeiten ohne lokale TeX-Installation
+
+Niemand muss LaTeX installieren, um am Text mitzuarbeiten. Ein Klick öffnet das
+Manifest in Overleaf im Browser, fertig eingerichtet und direkt kompilierbar:
+
+[![In Overleaf öffnen](https://img.shields.io/badge/In%20Overleaf%20%C3%B6ffnen-47A141?logo=overleaf&logoColor=white)](https://www.overleaf.com/docs?snip_uri=https://github.com/dna-dieter/LearniPedia/archive/refs/heads/main.zip)
+
+Overleaf lädt dabei den aktuellen Stand des `main`-Branches als Projektkopie.
+
+**Wichtig zum Rückweg:** Overleaf kann Änderungen nicht kostenfrei nach GitHub
+zurückschreiben, denn die Git- und GitHub-Anbindung ist eine
+[Premium-Funktion](https://cs.overleaf.com/learn/how-to/Overleaf_premium_features).
+Der Weg zurück läuft daher so:
+
+1. In Overleaf bearbeiten und Ergebnis prüfen.
+2. `Konzept.tex` herunterladen (Menü → Download).
+3. Datei hier im Browser über *Edit* einfügen und einen Pull Request öffnen —
+   oder den Vorschlag als [Issue](https://github.com/dna-dieter/LearniPedia/issues)
+   einreichen.
+
+Wer nur Text ändern will, kann `Konzept.tex` auch direkt in der GitHub-Weboberfläche
+bearbeiten. Das erzeugt sofort einen Commit, zeigt aber keine Vorschau.
+
+## Lokal erzeugen
 
 Voraussetzung ist eine TeX-Distribution (z. B. TeX Live oder MacTeX):
 
