@@ -8,6 +8,14 @@
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage{xcolor}
+\usepackage{tocloft}
+
+% Das Inhaltsverzeichnis zeigt Teile und Abschnitte. Weil die Abschnitts-
+% nummern pro Teil praefigiert sind (z. B. "III.7"), reicht die Standardbreite
+% des Nummernfeldes nicht aus -- ohne Verbreiterung klebt die Nummer am Titel.
+\setcounter{tocdepth}{1}
+\setlength{\cftsecnumwidth}{3.2em}
+\setlength{\cftsecindent}{1.5em}
 
 % Farbdefinitionen für ein modernes Design
 \definecolor{primarycolor}{RGB}{0, 51, 102}
@@ -16,18 +24,27 @@
 \hypersetup{
     colorlinks=true,
     linkcolor=primarycolor,
-    filecolor=primarycolor,      
+    filecolor=primarycolor,
     urlcolor=primarycolor
 }
 
 \titleformat{\section}{\large\bfseries\color{primarycolor}}{\thesection}{1em}{}
 \titleformat{\subsection}{\normalsize\bfseries\color{primarycolor}}{\thesubsection}{1em}{}
 
+% Abschnitte werden pro Teil neu gezaehlt. Damit hyperref eindeutige Sprungziele
+% erhaelt, wird neben der Anzeige (\thesection) auch der Ankername (\theHsection)
+% mit dem Teil-Praefix versehen. Ohne das kollidieren die PDF-Ziele.
+\newcommand{\teilnummerierung}[1]{%
+    \setcounter{section}{0}%
+    \renewcommand{\thesection}{#1.\arabic{section}}%
+    \renewcommand{\theHsection}{#1.\arabic{section}}%
+}
+
 % Projektdaten
-\title{\textbf{\Huge LearniPedia} \\[0.4em] \Large Das Wikipedia der Bildung -- Manifest \& Rahmenbedingungen}
-\author{\textbf{Projekt-Status:} Funktionaler Prototyp (MVP) \\ 
+\title{\textbf{\Huge LearniPedia} \\[0.4em] \Large Das Wikipedia der Bildung -- Credo, Struktur und Aufruf}
+\author{\textbf{Projekt-Status:} Funktionaler Prototyp (MVP) \\
 \textbf{Infrastruktur:} Dezentral (Hostinger VPS \& Apple Silicon Knoten) \\
-\textbf{Lizenz:} 100\% Open Source (Text: CC BY-SA 4.0 / GitHub) \\
+\textbf{Lizenz:} 100\,\% Open Source (Text: CC BY-SA 4.0 / GitHub) \\
 \textbf{Finanzierung:} Spendenbasiert}
 \date{\today}
 
@@ -41,148 +58,402 @@
 \end{center}
 \vspace{1em}
 
-\section{Die Ausgangslage \& Das Problem}
-Das aktuelle staatliche Bildungssystem leidet unter chronischem Lehrermangel, bürokratischer Lähmung und sozialer Ungerechtigkeit. Kommerzielle Tech-Giganten drängen in diese Lücke, missbrauchen Bildungsdaten jedoch zur Profilbildung und erzwingen proprietäre Abhängigkeiten. 
+\tableofcontents
+\vspace{1em}
 
-\textbf{LearniPedia} bricht diese Strukturen radikal auf. Es ist das funktionierende, unzensierte und kostenfreie „Wikipedia der Bildung“ -- gesteuert durch Künstliche Intelligenz, validiert durch Pädagogen, betrieben auf einer unzerstörbaren Open-Source-Infrastruktur.
+\noindent\textbf{Wie dieses Dokument zu lesen ist.} Teil~I ist das Credo: eine Seite, die für sich steht. Teil~II benennt die Grundstrukturen, die wir von Wikipedia übernehmen, weil dort seit über zwanzig Jahren funktioniert, was ein offenes Wissensprojekt zusammenhält. Teil~III beschreibt die sieben Schichten des Systems. Teil~IV löst die schwierigste Frage: Anerkennung ohne staatliche Akkreditierung. Teil~V benennt, was wir nicht gelöst haben. Teil~VI ist der Aufruf. Der Anhang enthält Begründungen und Belege -- er ist der Prüfteil, nicht der Werbeteil.
 
-\section{Die Kernarchitektur (Die unumstößlichen Säulen)}
+\part*{Teil I -- Das Credo}
+\addcontentsline{toc}{part}{Teil I -- Das Credo}
+\teilnummerierung{I}
 
-\begin{enumerate}[label=\textbf{\Roman*.}]
-    \item \textbf{Totale Unabhängigkeit von Big Tech:} 
-    LearniPedia nutzt keine kostenpflichtigen oder zensierten Cloud-APIs aus dem Silicon Valley. Das Gehirn der Plattform basiert auf frei zugänglichen Spitzen-Sprachmodellen (z.\,B. DeepSeek-R1 / Llama), die komplett heruntergeladen und physisch auf eigenen, dezentralen Hardware-Knoten (wie privaten Mac minis) betrieben werden. Kein Konzern und kein Staat kann den Zugriff sperren oder Lehrinhalte manipulieren.
+\section{Sieben Sätze, die nicht verhandelbar sind}
 
-    \item \textbf{Kompromissloser Kaskaden-Datenschutz (Zero-Knowledge):} 
-    Für die Registrierung ist ausschließlich eine frei wählbare E-Mail-Adresse erforderlich. Es werden keine Klarnamen, IP-Adressen oder Profildaten erfasst. Jede Anfrage durchläuft zwei automatisierte Filterstufen im RAM:
-    \begin{itemize}[label=--]
-        \item \textbf{Sicherheitscheck (Guardrails):} Algorithmische Blockade von Missbrauch, Schadcode oder emotionaler Manipulation.
-        \item \textbf{Anonymisierungsrunde:} Radikale Filterung personenbezogener Daten aus dem Freitext, \textit{bevor} die Anfrage das Haupt-Sprachmodell erreicht.
-    \end{itemize}
-
-    \item \textbf{Unzerstörbare Infrastruktur (Infrastructure as Code):} 
-    Die Plattform ist über Docker-Container vollkommen modularisiert (Moodle LMS + lokale KI-Schnittstellen). Die gesamte Systemarchitektur liegt als Code öffentlich auf GitHub. Sollte ein Server-Provider unter Druck geraten, kann die gesamte Universität per Skript innerhalb von 30 Minuten an jedem anderen Ort der Erde wieder online geschaltet werden.
-
-    \item \textbf{Frustrationsloses Lernen \& Selbstregulation:} 
-    LearniPedia eliminiert den klassischen Leistungsdruck. Es gibt keine Noten, kein Versagen und kein starres Zeitkorsett.
-    \begin{itemize}[label=--]
-        \item \textbf{Meisterschafts-Prinzip:} Lernende setzen sich ihre Ziele selbst über einen interaktiven Wissens-Stammbaum (Knowledge Graph). Die KI fungiert als unendlich geduldiger, sokratischer Tutor.
-        \item \textbf{Schutz vor externem Druck:} Lernende bestimmen ein tägliches Zeitbudget. Ist dieses erschöpft, sperrt das System weitere Fachfragen softwareseitig. Da das System anonym ist, hebelt es das „Multi-Account-Dilemma“ durch Selbstregulation aus: Wer Accounts wechselt, verliert seinen gesamten Fortschritt.
-    \end{itemize}
-
-    \item \textbf{Unbestechliche, internationale Validierung:} 
-    LearniPedia strebt keine träge staatliche Akkreditierung an. Die Leistungsüberprüfung erfolgt über dynamische KI-Fachgespräche in Echtzeit, anonymisierte Peer-Reviews durch fortgeschrittene Studierende sowie die gezielte Vorbereitung auf globale, herstellerunabhängige Fachzertifikate (z.\,B. IEEE, Linux Foundation) und greifbaren „Proof of Work“ via GitHub.
-
-    \item \textbf{Das Wikipedia-Finanzierungsmodell:} 
-    Die Nutzung ist für alle Studierenden weltweit zu 100\% kostenfrei. Die Infrastruktur wird rein über freiwillige Kleinstspenden der Community (inklusive zensurresistenter Kryptowährungen wie Monero/Bitcoin) getragen.
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=2em]
+    \item \textbf{Bildung ist ein Grundrecht, kein Produkt.} Wissensvermittlung darf weder verkauft noch rationiert noch als Gegenleistung für Wohlverhalten vergeben werden.
+    \item \textbf{Niemand muss sich ausweisen, um zu lernen.} Kein Abschluss, kein Alter, keine Herkunft, kein Aufenthaltstitel, kein Zahlungsmittel, keine Sprachprüfung, keine Warteliste.
+    \item \textbf{Unabhängigkeit ist eine Bauweise, keine Absichtserklärung.} Wer von einem Staat, einem Konzern, einem Geldgeber oder einer einzelnen Person abgeschaltet werden kann, ist nicht unabhängig. Abhängigkeit wird konstruktiv ausgeschlossen, nicht vertraglich zugesichert.
+    \item \textbf{Wir bitten nicht um Vertrauen, wir machen Nachprüfen billiger.} Inhalte, System-Prompts, Bewertungsmaßstäbe, Infrastruktur und Ergebnisdaten liegen öffentlich. Eine Behauptung ohne Belegmöglichkeit hat in diesem Projekt keinen Platz.
+    \item \textbf{Wir messen, statt zu versprechen.} Wirksamkeit wird erhoben, veröffentlicht und auch dann veröffentlicht, wenn die Zahlen gegen uns sprechen.
+    \item \textbf{Der Lernende setzt die Grenzen, nicht die Institution.} Keine Noten, kein Zeitkorsett, kein Leistungsdruck von außen -- und ein selbstgesetztes Zeitbudget, das das System gegen den eigenen Übereifer verteidigt.
+    \item \textbf{Was wir nicht können, sagen wir.} Dieses Projekt ersetzt keine Schulpflicht, keinen reglementierten Berufszugang und kein Labor. Wo unsere Reichweite endet, steht es geschrieben.
 \end{enumerate}
 
+\noindent Alles Folgende ist Ausführung dieser sieben Sätze. Wo ein späterer Abschnitt ihnen widerspricht, gilt dieser Teil.
+
+\part*{Teil II -- Was wir von Wikipedia übernehmen}
+\addcontentsline{toc}{part}{Teil II -- Was wir von Wikipedia übernehmen}
+\teilnummerierung{II}
+
+\section{Warum Wikipedia das richtige Vorbild ist -- und wofür}
+Wikipedia ist nicht stabil, weil ihre Texte frei lizenziert sind. Freie Lizenzen hatten viele gescheiterte Projekte. Wikipedia ist stabil, weil sie über zwanzig Jahre \textit{Verfahren} entwickelt hat: für Belege, für Streit, für Macht und für deren Entzug. Genau diese Schicht fehlt in den meisten Bildungsentwürfen, auch in früheren Fassungen dieses Dokuments. Wir übernehmen sie ausdrücklich und übersetzen sie ins Lernen.
+
+\subsection{Belegpflicht und keine Theoriefindung}
+Wikipedias härteste Regel ist nicht Neutralität, sondern Nachweisbarkeit: Was nicht auf eine überprüfbare Quelle zeigt, wird entfernt. Übersetzt auf LearniPedia heißt das: \textbf{Jede Lerneinheit führt ihre Quellen mit, und der Tutor darf nichts als gesichert darstellen, was nicht belegt ist.} Damit ist die Belegpflicht zugleich unser Gegenmittel gegen Halluzination -- nicht als nachträglicher Filter, sondern als Konstruktionsregel: Keine Quelle, keine Lehraussage.
+
+\subsection{Neutraler Standpunkt -- übersetzt in drei Gewissheitsstufen}
+Wikipedia entscheidet Kontroversen nicht, sie stellt sie dar. Ein Bildungssystem kann sich hinter dieser Regel nicht verstecken, denn Lernende brauchen Orientierung. Unsere Übersetzung sind drei ausgewiesene Stufen:
+\begin{itemize}[label=--]
+    \item \textbf{Gesichert:} breiter Fachkonsens, belegt.
+    \item \textbf{Umstritten:} die Positionen werden benannt, mit Belegen beider Seiten, ohne Entscheidung.
+    \item \textbf{Unbekannt:} der Tutor sagt „das weiß ich nicht“ und nennt, was zu wissen wäre.
+\end{itemize}
+\noindent Ein System, das die dritte Stufe nicht beherrscht, ist als Lehrinstanz untauglich, egal wie gut es formuliert.
+
+\subsection{Versionsgeschichte statt Autorität}
+Jede Änderung an einem Lehrtext, an einem Bewertungsmaßstab und an der Lehr-Persönlichkeit der KI ist einer Person zuordenbar, datiert und rücksetzbar. Wer die Didaktik verändert, hinterlässt einen Commit. Das ist bei uns kein Nebeneffekt von Git, sondern die Zusicherung, die an dessen Stelle tritt, wo andere Systeme ein Gütesiegel setzen.
+
+\subsection{Diskussion getrennt vom Material}
+Wikipedias Trennung von Artikel und Diskussionsseite ist eine unterschätzte Erfindung: Der Streit ist öffentlich, aber er verschmutzt den Text nicht. Bei uns bedeutet das getrennte Räume für Lehrinhalt und Fachdebatte. Wer den Streit sehen will, findet ihn vollständig. Wer lernen will, wird nicht in ihn hineingezogen.
+
+\subsection{Aufnahmekriterien für den Wissensgraph}
+Wikipedia hat Relevanzkriterien, weil ohne sie jede Sammlung zerfällt. Unser Äquivalent regelt, welche Kompetenz in den Wissens-Stammbaum aufgenommen wird, wie sie zu Nachbarkompetenzen in Beziehung steht und wann sie als überholt markiert wird. Diese Kriterien sind öffentlich und selbst änderbar -- über dasselbe Verfahren wie alles andere.
+
+\subsection{Rollen mit begrenzter, entziehbarer Macht}
+Wikipedia kennt Rechte, die über ein nachvollziehbares Verfahren erworben und wieder entzogen werden. Wir übernehmen das für die drei Rollen, die bei uns Macht ausüben:
+\begin{itemize}[label=--]
+    \item \textbf{Didaktik-Lenker} verändern System-Prompts und Lernpfade.
+    \item \textbf{Fachreviewer} geben Inhalte einer Domäne frei.
+    \item \textbf{Prüfer} bewerten Menschen -- die weitreichendste Befugnis im ganzen System.
+\end{itemize}
+\noindent Für jede gilt: öffentliches Bewerbungs- und Bestätigungsverfahren, öffentliche Tätigkeitsbilanz, definiertes Entzugsverfahren. Niemand hat eine Rolle, weil er das Projekt gegründet hat.
+
+\subsection{Schiedsverfahren und Gemeinschaftsentscheid}
+Für fachlichen Dissens, der sich nicht im Review lösen lässt, existiert eine letzte Instanz mit veröffentlichter Begründungspflicht. Für Grundsatzfragen entscheidet ein Gemeinschaftsentscheid mit vorab festgelegtem Quorum. Beides klingt bürokratisch und ist es auch. Die Alternative ist nicht Freiheit, sondern die stille Herrschaft der Langgedienten.
+
+\subsection{Trennung von Betrieb und Inhalt}
+Die vielleicht wichtigste Struktur: Bei Wikipedia betreibt eine Stiftung die Technik, während die Gemeinschaft über Inhalte entscheidet. Wir übernehmen diese Gewaltenteilung wörtlich. \textbf{Der Träger von LearniPedia stellt Infrastruktur bereit und hat keine inhaltliche Weisungsbefugnis.} Wer Server bezahlt, bestimmt nicht, was gelehrt wird. Ohne diese Trennung ist jede Spende ein Einflusskauf.
+
+\subsection{Spendenfinanzierung mit ausgesprochener Grenze}
+Kostenfreie Nutzung, getragen von vielen kleinen Beiträgen, ist das Wikipedia-Modell. Wir ergänzen es um die Regel, die dort schmerzhaft gelernt wurde: \textbf{öffentlicher Finanzbericht, Deckelung des Anteils einzelner Geber und ausdrückliches Ablehnungsrecht für Mittel mit inhaltlichen Erwartungen.} Ein Projekt, das zu 60\,\% von drei Gebern lebt, ist nicht spendenfinanziert, sondern abhängig -- nur intransparenter als bei Staatsgeld.
+
+\subsection{Das Fork-Recht als letzte Sicherung}
+Alle Inhalte stehen unter CC BY-SA 4.0, die Infrastruktur als Code offen. Biegt LearniPedia inhaltlich falsch ab, kann jede Gruppe das Projekt übernehmen und korrigieren. Dieses Recht ist kein Zusatz, es ist die Garantie, die alle vorstehenden Verfahren erst glaubwürdig macht: Wer sich der Gemeinschaft nicht stellt, verliert sie an einen Fork.
+
+\subsection{Wo Wikipedia kein Vorbild ist}
+Drei Grenzen benennen wir selbst, weil die Analogie sonst trägt, wo sie nicht tragen darf:
+\begin{itemize}[label=--]
+    \item \textbf{Wikipedia bewertet keine Menschen.} Wir stellen Kompetenznachweise aus. Das verlangt Identitätsbindung, Prüferrechenschaft und Widerspruchsrecht -- Fragen, für die es dort keine Antwort gibt. Teil~IV behandelt sie.
+    \item \textbf{Wikipedia hat das Tempoproblem nicht gelöst.} Artikel altern unbemerkt. Unsere Antwort sind Halbwertszeit-Metadaten und eine Verfallspipeline (Abschnitt~\ref{sec:lebenszyklus} dieses Dokuments).
+    \item \textbf{Wikipedias Krankheiten sind bekannt.} Autorenschwund, Machtkonzentration bei Altbearbeitern, Abschreckung von Neuen, systematische Lücken bei unterrepräsentierten Gruppen. Wer die Strukturen übernimmt, erbt die Krankheiten. Wir behandeln sie als Konstruktionsaufgabe: niedrige Einstiegsschwelle für Mitarbeit, befristete Rollen mit Neuwahl, aktive Nachwuchsgewinnung, veröffentlichte Lückenanalyse.
+\end{itemize}
+
+\part*{Teil III -- Die sieben Schichten}
+\addcontentsline{toc}{part}{Teil III -- Die sieben Schichten}
+\teilnummerierung{III}
+
+\noindent Ein weltweites Bildungssystem, das dem technischen Fortschritt in dessen Tempo folgt, ist kein Katalog von Kursen. Es besteht aus sieben Schichten, von denen jede einzeln funktionsfähig sein muss.
+
+\section{Wissensmodell}
+Ohne diese Schicht ist alles andere beliebig.
+\begin{itemize}[label=--]
+    \item \textbf{Kompetenz-Ontologie:} Wissen zerlegt in kleine, maschinenlesbare, versionierte Einheiten mit Voraussetzungsbeziehungen. Der Wissens-Stammbaum ist damit ein Datenmodell mit Verfahren, nicht bloß eine Navigationshilfe.
+    \item \textbf{Übersetzbarkeit in bestehende Rahmenwerke:} Jede Kompetenz verweist auf etablierte Systeme -- ISCED und EQR für Niveaus, ESCO und O*NET für Berufsbezug, SFIA für IT, ECTS für Umfang. Anerkennung entsteht durch Anschlussfähigkeit, nicht durch ein neues Privatvokabular.
+    \item \textbf{Halbwertszeit-Metadaten:} Jede Einheit trägt Volatilitätsklasse und Verfallsdatum. Das ist der eigentliche Mechanismus für Tempo.
+    \item \textbf{Trennung von Invariante und Volatile:} Mathematik, Logik, Naturgesetze, Erkenntnistheorie und Sprache ändern sich in Jahrzehnten; Werkzeuge, Frameworks und Standards in Monaten. Ein System, das beides gleich behandelt, ist entweder zu langsam oder ohne Substanz.
+    \item \textbf{Breite über STEM hinaus:} Handwerk, Gesundheit und Pflege, Recht, Landwirtschaft, Wirtschaft, Kunst, Sprachen, Grundbildung und Alphabetisierung -- und die ausgesprochene Grenze dessen, was ohne Körper, Werkstatt oder Labor nicht lehrbar ist.
+\end{itemize}
+
+\section{Inhalts-Lebenszyklus}
+\label{sec:lebenszyklus}
+\begin{itemize}[label=--]
+    \item \textbf{Inhalt als Spezifikation, nicht als Text:} Gespeichert werden Kompetenzziel, Quellenlage und didaktische Auflage; das Material wird daraus erzeugt. Aktualisierung ist dann ein Regenerationslauf und kein Umschreiben -- der Unterschied zwischen Wochen und Jahren.
+    \item \textbf{Primärquellenbindung:} Standards, Spezifikationen, Fachliteratur und Herstellerdokumentation direkt, statt über die Lehrbuch-Sekundärstufe, die strukturell Jahre hinterherhängt.
+    \item \textbf{Review- und Verfallspipeline:} Automatische Prüfvorlage bei Ablauf, Fachreview, Deprecation-Kennzeichnung. Überholte Inhalte werden markiert, nicht gelöscht.
+    \item \textbf{Pull Request statt Zulassungsverfahren:} Änderung durch Vorschlag und Review ersetzt Schulbuchgenehmigung und Bildungsplanrevision.
+    \item \textbf{Lokale Ableitungen:} Recht, Maßeinheiten, Klima und Marktbedingungen unterscheiden sich. Globaler Kern, regionale Varianten.
+\end{itemize}
+
+\section{Didaktik und Lernprozess}
+\begin{itemize}[label=--]
+    \item \textbf{Adaptive Engine:} Meisterschafts-Prinzip, sokratischer Dialog, gezielte Diagnose von Fehlvorstellungen. Die KI als unendlich geduldiger Tutor.
+    \item \textbf{Evidenzbasierte Mechanik:} Abrufübung, verteiltes Wiederholen, Verschränkung von Themen, Elaboration -- als Systemverhalten, nicht als Empfehlung an den Lernenden.
+    \item \textbf{Produktive Schwierigkeit:} Der Tutor muss Antworten zurückhalten können. Sofortige Erklärung erzeugt Kompetenzillusion; ein System, das jede Anstrengung abnimmt, lehrt nichts. Dies ist die wichtigste Selbstbeschränkung dieser Schicht.
+    \item \textbf{Soziale Struktur:} Kohorten, Lernpartner, Mentoren, Fachgemeinschaften. Reine Eins-zu-eins-Betreuung durch eine Maschine erklärt die Abbruchquoten früherer Plattformen nicht weg.
+    \item \textbf{Metakognition:} Lernen lernen, realistische Selbsteinschätzung, Selbstwirksamkeit. Wo Noten fehlen, übernimmt das sonst niemand.
+    \item \textbf{Vermittler vor Ort:} Bibliotheken, Volkshochschulen, Schulen, Hilfsorganisationen, Gemeinschaftsknoten -- für alle, die den direkten Zugang nicht aus eigener Kraft schaffen.
+    \item \textbf{Selbstregulation:} Selbstgesetztes Tagesbudget; ist es erschöpft, sperrt das System weitere Fachfragen. Da kein Profil existiert, verliert wer den Zugang wechselt seinen Fortschritt. Die Grenze setzt der Lernende, nicht die Institution.
+\end{itemize}
+
+\section{Bewertung}
+Hier entscheidet sich Anerkennung.
+\begin{itemize}[label=--]
+    \item \textbf{Gemessen wird Können, nicht Reproduktion:} adaptives Fachgespräch, Projektarbeit, Verteidigung der eigenen Arbeit, praktische Vorführung.
+    \item \textbf{Integrität unter KI-Bedingungen:} Aufgaben zur häuslichen Bearbeitung und Multiple Choice sind seit 2023 wertlos. Belastbar bleiben Live-Dialog mit Rückfragen, Nachweis der Entstehung über Zwischenstände und Commit-Historie, Verteidigung und Vorführung. Ohne belastbare Antwort hier ist kein Nachweis anerkennungsfähig.
+    \item \textbf{Kalibrierung nach oben:} Wer ein Niveau behauptet, muss zeigen, dass die eigene Bewertung mit einer akzeptierten Prüfung übereinstimmt -- und strenger ist, nicht milder.
+    \item \textbf{Fairness und Bias-Audit:} Gleiche Leistung, gleiche Bewertung, unabhängig von Sprache, Dialekt, Ausdrucksniveau und Herkunft. Bei maschineller Bewertung ist das nicht selbstverständlich, sondern nachzuweisen.
+    \item \textbf{Menschliche Letztinstanz und Widerspruchsrecht:} Jede Bewertung ist anfechtbar und durch Menschen überprüfbar.
+    \item \textbf{Prüfen als eigene Qualifikation:} Wer bewertet, ist dafür qualifiziert, benannt und rechenschaftspflichtig.
+\end{itemize}
+
+\section{Nachweis, Identität und Vertrauen}
+Diese Schicht wird in Teil~IV vollständig entfaltet, weil sie die schwierigste des ganzen Systems ist.
+\begin{itemize}[label=--]
+    \item Verifizierbare, maschinenlesbare, widerrufbare Nachweise auf offenen Standards.
+    \item Kleinteilige Kompetenznachweise, daraus zusammengesetzte Profile -- kein Alles-oder-nichts-Abschluss.
+    \item Gültigkeitsdauer und Rezertifizierung statt Nachweise auf Lebenszeit.
+    \item Gestufte Identität: anonym lernen, freiwillig gebunden zertifizieren.
+    \item Reputation aus sichtbarer Arbeit als eigenständiger, gleichwertiger Nachweisweg.
+\end{itemize}
+
+\section{Technik und Betrieb}
+\begin{itemize}[label=--]
+    \item \textbf{Modell-Agnostik:} Frei verfügbare Spitzen-Sprachmodelle auf eigener, dezentraler Hardware. Ein Generationswechsel bedeutet Gewichte laden, Prompts nachziehen, Container neu starten -- Zeithorizont Tage. Kein Modellanbieter wird zur Abhängigkeit.
+    \item \textbf{Kaskaden-Datenschutz (Zero Knowledge):} Registrierung allein über eine frei wählbare E-Mail-Adresse. Keine Klarnamen, keine IP-Adressen, keine Profile. Jede Anfrage durchläuft im Arbeitsspeicher einen Sicherheitscheck gegen Missbrauch und Manipulation sowie eine Anonymisierungsrunde, die personenbezogene Angaben aus dem Freitext entfernt, \textit{bevor} sie das Hauptmodell erreicht.
+    \item \textbf{Infrastruktur als Code:} Vollständig containerisiert, öffentlich versioniert, an jedem Ort der Erde per Skript neu startbar. Gerät ein Anbieter unter Druck, zieht ein Knoten um; das System hält.
+    \item \textbf{Minimallast-Design:} Weil das Modell lokal rechnet, überträgt die Leitung nur Text. Ein Tutor-Dialog braucht Kilobit statt Megabit. Lauffähig auf gedrosseltem Mobilfunk, geteiltem Dorfanschluss, Satellitenlink oder lokalem Mesh -- und auf alter Hardware.
+    \item \textbf{Offene Formate und Datenportabilität:} Lernende nehmen ihren gesamten Fortschritt mit.
+    \item \textbf{Messung unter Datenschutz:} Aggregierte Wirksamkeitsmessung mit öffentlich einsehbarer Methodik und Forschungsschnittstelle für Dritte.
+\end{itemize}
+
+\section{Institution}
+\begin{itemize}[label=--]
+    \item \textbf{Governance:} Die Verfahren aus Teil~II -- Rollen, Entzug, Schiedsinstanz, Gemeinschaftsentscheid, Gewaltenteilung zwischen Träger und Inhalt.
+    \item \textbf{Menschen und Rollen:} Fachreviewer, Didaktik-Lenker, Prüfer, Knotenbetreiber, Übersetzer, Mentoren. Rekrutierung, Qualifizierung und Anerkennung ihrer Arbeit. Reine Freiwilligkeit trägt keine Zusage auf Prüfungsverfügbarkeit; Rollen mit Verfügbarkeitspflicht werden bezahlt.
+    \item \textbf{Finanzierung:} Diversifiziert, gedeckelt, offengelegt, mit Ablehnungsrecht.
+    \item \textbf{Recht und Aufsicht:} Trägerform, Jurisdiktion, KI-Verordnung, Datenschutz, Jugendschutz, Prüfungs- und Zertifizierungsrecht.
+    \item \textbf{Ethik und Qualitätssicherung:} Wahrhaftigkeit und Umgang mit Unsicherheit, Verbot von Manipulation und dunklen Entwurfsmustern, Kinderschutz, Bias-Kontrolle, kein Optimieren auf Verweildauer.
+    \item \textbf{Kontinuität:} Nachfolge, Archivierung und geordnete Auflösung. Die Inhalte müssen den Betrieb überleben.
+    \item \textbf{Ökologische Kosten:} Lokale Inferenz verlagert Energieverbrauch, sie senkt ihn nicht automatisch. Wer Betriebstransparenz beansprucht, veröffentlicht auch diese Zahl.
+    \item \textbf{Verbreitung:} Mehrsprachigkeit, Vermittler, Partner, Multiplikatoren.
+\end{itemize}
+
+\part*{Teil IV -- Anerkennung ohne Akkreditierung}
+\addcontentsline{toc}{part}{Teil IV -- Anerkennung ohne Akkreditierung}
+\teilnummerierung{IV}
+
+\section{Warum der Akkreditierungsweg für uns versperrt ist}
+LearniPedia strebt keine staatliche Akkreditierung an. Das ist keine Trotzhaltung, sondern eine Folge der Rechtslage, die wir hier offen darlegen, damit sie nachprüfbar ist.
+
+Akkreditierung ist in der Europäischen Union keine Dienstleistung, die man am Markt einkauft. Nach Verordnung (EG) Nr.~765/2008 benennt jeder Mitgliedstaat genau \textit{eine} nationale Akkreditierungsstelle, und diese arbeitet hoheitlich und ausdrücklich nicht im Wettbewerb\footnote{\url{https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:02008R0765-20210716}}. Kein Anbieterwechsel, kein Ausweichen, kein Austritt. Die internationale Geltung solcher Bestätigungen entsteht über die multilateralen Abkommen von EA, IAF und ILAC -- und diese hängen vollständig an eben jenen nationalen Stellen\footnote{\url{https://www.dakks.de/de/dakks-mitgliedschaften.html}}. Weltweite Anerkennung über diesen Pfad ist von staatlicher Verankerung also nicht trennbar; sie ist deren Verlängerung.
+
+Daraus folgt die unbequeme Tatsache, die wir nicht verschweigen: \textbf{Eine wirklich unabhängige globale Akkreditierungsinstanz existiert nicht.} Es gibt sie nicht als Einrichtung, die man ansprechen könnte. Jede bestehende Struktur mit weltweiter Reichweite hat genau einen von drei Ankern.
+
+\subsection{Die drei Anker -- und unsere Wahl}
+\begin{itemize}[label=--]
+    \item \textbf{Staatlich verankert:} die IAF/ILAC-Kette, europäische Qualitätssicherung im Hochschulbereich, völkerrechtliche Anerkennungskonventionen, nationale Ministerien. Langsam, an Legislaturperioden gebunden, für ein spendenfinanziertes Kollektiv in den Konformitätskosten unbezahlbar. Fällt für uns aus.
+    \item \textbf{Industriegetragen:} Fach- und Branchenverbände, die weltweit akzeptierte Zertifikate ausgeben. Tatsächlich staatsfrei -- aber sie tauschen die Abhängigkeit nur aus: Prüfungsgebühren, Konsortialinteressen, Lehrplanhoheit bei Verbänden, die von Mitgliedsbeiträgen der Industrie leben. Wir nutzen sie als Kalibrierungsmaßstab und als Mitzeichner, niemals als Fundament. Dass frühere Fassungen dieses Dokuments sich unbesehen auf solche Zertifikate stützten, war ein blinder Fleck; er ist hiermit benannt.
+    \item \textbf{Werk- und evidenzbasiert:} verifizierbare öffentliche Arbeit. Unabhängig von Staat \textit{und} Konzern, seit Jahrzehnten weltweit funktionierend -- in freier Software und in den Wissenschaften. Niemand verleiht diese Anerkennung, niemand kann sie entziehen. Dies ist der einzige Anker, der unserem Credo vollständig entspricht, und deshalb unser primärer.
+\end{itemize}
+
+\subsection{Das Vorbild, das beweist, dass es geht}
+Dass fachlich getragene, staatsferne Anerkennung weltweit möglich ist, ist keine Hoffnung, sondern seit 1989 belegt. Der Washington Accord ist kein Staatsvertrag, sondern eine freiwillige mehrseitige Vereinbarung zwischen Fachorganisationen, die einander die Gleichwertigkeit ihrer Bewertungen zuerkennen -- ohne völkerrechtliche Grundlage und ohne Ministerium\footnote{\url{https://www.internationalengineeringalliance.org/accords/washington-accord}}. Die dahinterstehende International Engineering Alliance setzt inzwischen gemeinsam mit UNESCO und WFEO weltweite Kompetenz-Benchmarks, denen staatliche Systeme folgen\footnote{\url{https://www.internationalengineeringalliance.org/}}.
+
+Redlicherweise: Viele Signatare dieses Abkommens sind in ihren Ländern staatlich mandatierte Stellen, der Accord ist also nicht ankerrein. Entscheidend ist für uns nicht seine Reinheit, sondern sein struktureller Bauplan -- Standard zuerst, gegenseitige Anerkennung durch Fachleute, Staaten folgen später oder gar nicht.
+
+\section{Die vier Schichten unserer Anerkennung}
+Jede Schicht funktioniert einzeln, gemeinsam ersetzen sie den Akkreditierer.
+
+\subsection{Schicht 1 -- Verifizierbarkeit}
+Nachweise werden als kryptografisch prüfbare digitale Belege ausgestellt. Der Datenstandard Verifiable Credentials liegt seit Mai 2025 als W3C-Empfehlung vor\footnote{\url{https://www.w3.org/press-releases/2025/verifiable-credentials-2-0/}}; das Nachweisformat Open Badges 3.0 baut darauf auf und ist damit an dieselbe Prüflogik angebunden\footnote{\url{https://www.1edtech.org/standards/open-badges}}. Wir verwenden webbasierte dezentrale Bezeichner ohne Blockchain und ohne Anbieterbindung. Damit ist jeder Nachweis ohne Rückfrage bei uns auf Echtheit prüfbar, widerrufbar und maschinenlesbar. Das löst die Echtheitsfrage vollständig -- und die Vertrauensfrage überhaupt nicht.
+
+\subsection{Schicht 2 -- Umkehrung der Beweislast}
+Jeder Nachweis führt die Arbeit mit, auf die er sich stützt: Entstehungsverlauf, Artefakte, verteidigtes Projekt, mit Zustimmung protokolliertes Prüfungsgespräch. Eine Hochschule sagt „glaubt uns“. Unsere Nachweise sagen „prüft selbst“.
+
+Das ist der eigentliche Hebel dieses Konzepts: Wir bitten nicht um Vertrauen, sondern machen Nachprüfen billiger als Vertrauen. Ein Arbeitgeber, der zehn Minuten Einsicht in belegte Arbeit nehmen kann, braucht kein Siegel, das er ohnehin nicht versteht.
+
+\subsection{Schicht 3 -- Kalibrierung nach oben}
+Wir veröffentlichen die Übereinstimmung unserer Bewertungen mit Prüfungen, deren Härte bereits akzeptiert ist -- verbunden mit dem Anspruch, sichtbar strenger zu sein. Dazu gehören öffentliche Aufgabenpools, öffentliche Bewertungsraster, öffentliche Durchfallquoten und Nachbewertung durch unabhängige Prüfer.
+
+Der Grund ist nüchtern: Ein Nachweis, der leichter zu erlangen ist als das Original, wird niemals anerkannt. Einer, der schwerer ist und das belegen kann, setzt sich durch. Wir konkurrieren daher nicht über Bequemlichkeit, sondern über Strenge.
+
+\subsection{Schicht 4 -- Föderation statt Instanz}
+Wir errichten kein eigenes Gütesiegel, sondern einen Kreis von Mitzeichnern, die einen gemeinsamen Kompetenzstandard tragen und sich gegenseitig prüfen: Fachgesellschaften, Betreuer bedeutender freier Software mit eigener Reputation, Arbeitgeber, einzelne Wissenschaftler. Vorbild sind der Washington Accord und die Arbeitsweise offener Standardisierungsgremien. Die Legitimation entsteht aus der Qualität der Unterschriften, nicht aus einer Zulassung.
+
+\section{Rechtlicher Sitz und Nicht-Vereinnahmbarkeit}
+Nicht eine Jurisdiktion, sondern mehrere gespiegelte Träger -- niederländische Stiftung, schweizerischer Verein, belgische Vereinigung ohne Gewinnerzielungsabsicht sind die etablierten Rechtsformen für internationale, gemeinnützige Zusammenschlüsse. Signaturschlüssel werden verteilt gehalten, sodass kein einzelner Staat die Ausstellung von Nachweisen beenden kann.
+
+Redlicherweise: Auch die Niederlande und die Schweiz sind Staaten. Unabhängigkeit bedeutet hier Nicht-Vereinnahmbarkeit durch einen einzelnen Akteur, nicht Exterritorialität. Letztere gibt es nicht, und wer sie behauptet, täuscht.
+
+\section{Was auf diesem Weg unerreichbar bleibt}
+Diese Grenze ziehen wir selbst, weil ihr Verschweigen unseren Nutzenden schaden würde.
+
+\textbf{Reglementierte Berufe bleiben außer Reichweite.} Medizin, Pharmazie, Rechtsanwaltschaft, Lehramt, Pflege, prüfende Ingenieurtätigkeit, Luftfahrt: Der Berufszugang ist gesetzliches Staatsmonopol. Keine unabhängige Struktur kann das umgehen, und kein Nachweis von uns wird das je ersetzen. Diese Fächer können bei LearniPedia gelernt werden -- der Berufszugang wird von uns nicht bescheinigt. Wer ein Bildungsangebot bewirbt, das hier Hoffnungen weckt, handelt unredlich.
+
+Ebenso gilt weiterhin: LearniPedia ist \textbf{kein Ersatz für den Schulbesuch und kein Werkzeug zu dessen Umgehung} (ausführlich im Anhang, Abschnitt~\ref{sec:freiwilligkeit}).
+
+\section{Der Preis, klar benannt}
+Dieser Weg kostet:
+\begin{itemize}[label=--]
+    \item Reputation entsteht über Jahre, nicht über eine Urkunde.
+    \item Er verlangt sichtbar härtere Prüfungen als die Alternativen.
+    \item Er verlangt die Veröffentlichung von Ergebnisdaten auch dann, wenn sie schlecht ausfallen.
+    \item Er verträgt keine einzige Runde Notenschenkung. Ein einmal entwerteter Nachweis ist dauerhaft entwertet.
+\end{itemize}
+\noindent Dafür gilt der Satz, der die ganze Rechnung trägt: \textbf{Eine Akkreditierung kann widerrufen werden. Eine belegte Bilanz nicht.}
+
+\part*{Teil V -- Was wir nicht gelöst haben}
+\addcontentsline{toc}{part}{Teil V -- Was wir nicht gelöst haben}
+\teilnummerierung{V}
+
+\noindent Dieser Teil steht bewusst \textit{vor} dem Aufruf. Ein Fachverband antwortet nicht auf ein fertiges Konzept, sondern auf ein offenes Problem, das er lösen kann.
+
+\section{Die drei Engstellen}
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=2em]
+    \item \textbf{Prüfungsintegrität unter KI-Bedingungen.} Ohne glaubwürdige Prüfung kein anerkannter Nachweis -- unabhängig davon, wie gut die Lehre ist. Wir haben einen Ansatz (Live-Dialog, Entstehungsnachweis, Verteidigung), aber keinen erprobten Nachweis seiner Manipulationsresistenz im großen Maßstab.
+    \item \textbf{Anonymität gegen Zertifizierbarkeit.} Anonym lernen ist möglich, anonym zertifizieren nicht: Ein Nachweis muss an eine Person binden, sonst ist er handelbar. Unser Ausweg ist die Trennung der Räume -- anonymer Lernraum, freiwillige Identitätsbindung erst bei der Zertifizierung, selektive Offenlegung. Ob diese Trennung technisch und rechtlich sauber durchhält, ist ungeprüft.
+    \item \textbf{Anerkennung als Netzwerkeffekt.} Sie lässt sich nicht erklären, nur erarbeiten. Wir kennen den Weg (Teil~IV), aber wir haben ihn nicht beschritten.
+\end{enumerate}
+
+\section{Die Zielkonflikte, die bestehen bleiben}
+\begin{itemize}[label=--]
+    \item \textbf{Zero Knowledge gegen Protokollierungspflicht.} Die Nachvollziehbarkeitspflichten für Hochrisiko-Systeme (Art.~12 KI-Verordnung) stehen unserer Architektur entgegen. Unser Vorschlag sind aggregierte, personenfrei geführte Audit-Protokolle. Wir stellen die Frage öffentlich, statt sie bis zur ersten Aufsichtsanfrage zu vertagen (Anhang, Abschnitt~\ref{sec:kiact}).
+    \item \textbf{Anonymität gegen Kinder- und Jugendschutz.} Anonym, unzensiert und offen für alle Altersgruppen -- das ist die am stärksten exponierte Stelle dieses Konzepts, deutlich mehr als jede Regulierungsfrage. Die algorithmischen Schutzfilter sind eine Teilantwort, keine Lösung. Wir suchen hier ausdrücklich fachlichen Rat.
+    \item \textbf{Unzensiert gegen Qualitätssicherung.} „Unzensiert“ und „von Pädagogen validiert“ ist ohne Verfahren ein Widerspruch. Teil~II beschreibt das Verfahren; ob es unter Streitlast hält, weiß niemand vor dem ersten Streit.
+    \item \textbf{Unabhängigkeit gegen Verwertbarkeit.} Je unabhängiger der Nachweis, desto mühsamer seine Anerkennung. Wir haben diese Richtung bewusst gewählt und tragen ihre Kosten.
+    \item \textbf{Skalierung gegen Gemeinschaft.} Grenzkosten nahe null gelten für die Maschine, nicht für Menschen. Mentoren, Prüfer und Reviewer skalieren nicht.
+    \item \textbf{Kostenfrei gegen Betriebssicherheit.} Freiwilligenarbeit kennt keine Verfügbarkeitsgarantie. Wer Prüfungstermine zusagt, muss dafür bezahlt werden.
+    \item \textbf{Sofortige Antwort gegen Lernwirksamkeit.} Der geduldige Tutor ist zugleich die größte didaktische Gefahr dieses Systems.
+\end{itemize}
+
+\section{Was wir messen statt zu behaupten}
+Ob Adaptivität ausreicht, um Motivations- und Milieubarrieren zu überwinden, ist nicht erwiesen (Anhang, Abschnitt~\ref{sec:mooc}). Wir behaupten es nicht. Wir erheben es -- anonymisiert, aggregiert, mit öffentlich einsehbarer Methodik und offener Forschungsschnittstelle. Und wir veröffentlichen auch die Zahlen, die gegen uns sprechen.
+
+\part*{Teil VI -- Aufruf}
+\addcontentsline{toc}{part}{Teil VI -- Aufruf}
+\teilnummerierung{VI}
+
+\noindent Die technische Basis steht. Was fehlt, sind Menschen und Institutionen für die Schichten, die Software nicht leisten kann. Jede Gruppe unten findet einen konkreten ersten Schritt -- nicht die Bitte, dieses Papier gut zu finden.
+
+\section{Pädagogen und Fachwissenschaftler}
+\textbf{Wir brauchen:} Didaktik-Lenker für System-Prompts und Lernpfade, Fachreviewer für Domänen, Prüfer für die Bewertungsschicht.\\
+\textbf{Wir bieten:} versionierte, öffentlich zugeschriebene Autorschaft an einem Regelwerk, das weltweit wirkt, statt an einem Schulbuchkapitel.\\
+\textbf{Erster Schritt:} Widerspruch zu den Abschnitten~III.3 und~III.4 als Issue -- besonders zur produktiven Schwierigkeit und zur Prüfungsintegrität.
+
+\section{Fachgesellschaften und Berufsverbände}
+\textbf{Wir brauchen:} Mitzeichner für einen gemeinsamen Kompetenzstandard nach dem Muster aus Teil~IV -- nicht als Zulassungsstelle, sondern als gleichrangige Unterschrift.\\
+\textbf{Wir bieten:} vollständige Einsicht in Aufgabenpools, Bewertungsraster und Ergebnisdaten. Prüfbarkeit, wie sie kein kommerzieller Anbieter gewährt.\\
+\textbf{Erster Schritt:} ein Gespräch über eine einzelne Domäne als Pilot.
+
+\section{Bildungsforschung}
+\textbf{Wir brauchen:} Partner für die Wirksamkeitsmessung, die Teil~V zusagt -- mit Methodenreputation und der Freiheit, negative Befunde zu veröffentlichen.\\
+\textbf{Wir bieten:} eine Forschungsschnittstelle auf anonymisierte, aggregierte Lerndaten und ein Feld, in dem Adaptivität erstmals im Maßstab prüfbar ist.\\
+\textbf{Erster Schritt:} gemeinsames Studiendesign, bevor die ersten Zahlen existieren.
+
+\section{Technische Mitwirkende und Knotenbetreiber}
+\textbf{Wir brauchen:} dezentrale Rechenknoten, die Nachweisschicht auf offenen Standards, Barrierefreiheit in der HTML-Ausgabe, Offline-Fähigkeit.\\
+\textbf{Wir bieten:} vollständige Offenlegung, Fork-Recht, keine Konzernbindung.\\
+\textbf{Erster Schritt:} Repository, Issues, Pull Requests.
+
+\section{Vermittler mit Reichweite}
+\textbf{Wir brauchen:} Bibliotheken, Volkshochschulen, Schulen, Hilfs- und Bildungsorganisationen als Orte für alle, die Gerät, Anschluss oder digitale Vorerfahrung nicht haben. Ohne Vermittler erreicht dieses Projekt genau jene nicht, für die es gedacht ist.\\
+\textbf{Wir bieten:} ein Angebot, das auf vorhandener Hardware und schwacher Leitung läuft, kostenlos und ohne Registrierungsauflagen.\\
+\textbf{Erster Schritt:} ein Standort, eine Gruppe, ein Halbjahr.
+
+\section{Unterstützer und Geldgeber}
+\textbf{Wir brauchen:} Mittel für Infrastruktur und für die Rollen mit Verfügbarkeitspflicht.\\
+\textbf{Unsere Bedingungen -- vorab, nicht auf Anfrage:} Der Träger hat keine inhaltliche Weisungsbefugnis. Der Anteil einzelner Geber ist gedeckelt. Alle Zuwendungen ab einer Schwelle werden veröffentlicht. Mittel mit inhaltlichen Erwartungen werden abgelehnt.\\
+\textbf{Erster Schritt:} Prüfung, ob diese Bedingungen für Sie tragbar sind. Wenn nicht, sparen wir beiden Seiten Zeit.
+
+\section{Aufsichtsbehörden}
+\textbf{Wir brauchen:} eine belastbare Einordnung unserer Architektur, insbesondere zum Konflikt zwischen Nachvollziehbarkeitspflichten und Datenminimierung.\\
+\textbf{Wir bieten:} vollständige Offenlegung von Modellgewichten, System-Prompts und Infrastruktur -- über das gesetzlich Verlangte hinaus, gegenüber der Öffentlichkeit und nicht nur gegenüber der Behörde.\\
+\textbf{Erster Schritt:} Wir fragen von uns aus an, statt auf die erste Prüfung zu warten.
+
+\section{Kritiker}
+Die wirksamste Form der Mitarbeit an diesem Projekt ist der begründete Widerspruch. Teil~V listet, wo wir am angreifbarsten sind. Wer eine dieser Stellen zum Einsturz bringt, hat mehr beigetragen als jede zustimmende Weiterleitung.
+
+\part*{Anhang -- Begründungen und Belege}
+\addcontentsline{toc}{part}{Anhang -- Begründungen und Belege}
+\appendix
+\setcounter{section}{0}
+\renewcommand{\theHsection}{App.\arabic{section}}
+
+\noindent Dieser Anhang ist der Prüfteil des Dokuments. Er enthält die Begründungen, die Quellen und die ausdrücklich benannten Schwachstellen der Argumentation. Wer dem Credo und der Struktur nicht glaubt, findet hier die Belege oder deren Fehlen.
+
+\section{Die Ausgangslage}
+Das staatliche Bildungssystem leidet unter Lehrermangel, bürokratischer Lähmung und sozialer Ungerechtigkeit. Kommerzielle Anbieter drängen in diese Lücke, verwerten Bildungsdaten zur Profilbildung und erzeugen proprietäre Abhängigkeiten. LearniPedia setzt an beiden Stellen an: kostenfrei und unzensiert gegen die Zugangsschranke, dezentral und quelloffen gegen die Verwertung.
+
+Wir behaupten dabei nicht, Hochschulen seien wertlos geworden. Diese Position wäre falsch und würde das Projekt selbst zerlegen. Hochschulen \textit{erzeugen} Wissen -- über Labore, Experimente, Grundlagenforschung und Peer Review. Ohne diese Produktion gibt es keine Inhalte, die ein Sprachmodell vermitteln könnte; jedes Sprachmodell ist Verwerter fremder Erkenntnisleistung, kein Ersatz für sie. Was LearniPedia auflöst, ist enger und dafür präzise: das Monopol auf \textit{Wissensvermittlung} und die \textit{Zugangskontrolle} dazu. Die Knappheit, die den Hörsaal einst begründete -- wenige Fachleute, deren Zeit rationiert werden muss -- existiert bei der Vermittlung nicht mehr. In der Forschung existiert sie weiterhin, und deshalb bleibt menschliche didaktische Aufsicht unverzichtbar.
+
 \section{Internationaler Standard statt nationalem PISA-Versagen}
-Falls staatliche Behörden die Struktur von LearniPedia bemängeln, verweisen wir auf die harten Fakten der internationalen Bildungsforschung:
+Falls staatliche Stellen die Struktur von LearniPedia bemängeln, verweisen wir auf die internationale Bildungsforschung:
 \begin{itemize}
-    \item \textbf{Das PISA-Zeugnis:} Die jüngsten PISA-Ergebnisse stellen dem deutschen Schulsystem das schlechteste Zeugnis seiner Geschichte aus. Das staatliche System hat nachweislich versagt, den internationalen Mindeststandard zu sichern. LearniPedia orientiert sich daher an weltweiten Spitzen-Benchmarks.
-    \item \textbf{Das Brechen der sozialen Selektion:} PISA beweist chronisch, dass der Bildungserfolg in Deutschland stark von der Herkunft abhängt. Durch den anonymen Zugang eliminiert LearniPedia jede Form von sozialer oder finanzieller Diskriminierung ab Sekunde eins.
-    \item \textbf{Lösung des Digitalisierungs-Desasters:} Während staatliche Schulen bei der digitalen Infrastruktur gelähmt sind, liefert LearniPedia funktionierende Spitzentechnologie im Weltklasse-Format direkt auf das Endgerät der Schüler.
+    \item \textbf{Das PISA-Zeugnis:} Die jüngsten PISA-Ergebnisse stellen dem deutschen Schulsystem das schlechteste Zeugnis seiner Geschichte aus. Der internationale Mindeststandard wurde nachweislich nicht gesichert. LearniPedia orientiert sich daher an weltweiten Spitzen-Benchmarks.
+    \item \textbf{Das Brechen der sozialen Selektion:} PISA belegt chronisch, dass Bildungserfolg in Deutschland stark von der Herkunft abhängt. Durch den anonymen Zugang entfällt jede finanzielle und soziale Vorprüfung ab Sekunde eins.
+    \item \textbf{Digitalisierung:} Während staatliche Schulen bei digitaler Infrastruktur gelähmt sind, liefert LearniPedia funktionierende Technik direkt auf das Endgerät.
 \end{itemize}
 
 \section{Geschwindigkeit: Bandbreite ist die falsche Metrik}
-Die staatliche Bildungsdebatte hat sich auf eine Frage versteift, die für Lernen kaum relevant ist: Wann kommt das Gigabit in die Schule? Während Deutschland Gräben zieht -- der FTTH-Anteil liegt im OECD-Vergleich deutlich unter dem Mittelwert\footnote{OECD-Breitbandstatistik; Aufbereitung unter \url{https://de.statista.com/themen/10276/glasfaseranschluesse/}} -- verschiebt sich die Konnektivität global längst auf parallele Pfade. Die LEO-Konstellation von Starlink umfasst rund 10.900 aktive Satelliten und über 12 Millionen Kund*innen (Stand Juni 2026)\footnote{\url{https://en.wikipedia.org/wiki/Starlink}}.
+Die staatliche Bildungsdebatte hat sich auf eine Frage versteift, die für Lernen kaum relevant ist: Wann kommt das Gigabit in die Schule? Während Deutschland Gräben zieht -- der FTTH-Anteil liegt im OECD-Vergleich deutlich unter dem Mittelwert\footnote{OECD-Breitbandstatistik; Aufbereitung unter \url{https://de.statista.com/themen/10276/glasfaseranschluesse/}} -- verschiebt sich Konnektivität global längst auf parallele Pfade. Die LEO-Konstellation von Starlink umfasst rund 10.900 aktive Satelliten und über 12 Millionen Kund*innen (Stand Juni 2026)\footnote{\url{https://en.wikipedia.org/wiki/Starlink}}.
 
 \subsection{Der Kapazitätssprung ist keine Ankündigung mehr}
-Die Größenordnung dieser Verschiebung wird regelmäßig unterschätzt. Am 24.\,Juli 2026 hat SpaceX auf Starship-Testflug 13 erstmals 20 Satelliten der neuen Generation Starlink V3 ausgesetzt\footnote{\url{https://spaceflightnow.com/2026/07/16/live-coverage-spacex-to-deploy-first-starlink-v3-satellites-on-suborbital-starship-super-heavy-flight/}}. Die Hardware ist damit nicht mehr Roadmap, sondern im Orbit erprobt:
+Am 24.\,Juli 2026 hat SpaceX auf Starship-Testflug 13 erstmals 20 Satelliten der Generation Starlink V3 ausgesetzt\footnote{\url{https://spaceflightnow.com/2026/07/16/live-coverage-spacex-to-deploy-first-starlink-v3-satellites-on-suborbital-starship-super-heavy-flight/}}. Die Hardware ist damit im Orbit erprobt:
 \begin{itemize}[label=--]
     \item \textbf{Pro Satellit:} rund 1\,Tbit/s Downlink und 160\,Gbit/s Uplink -- etwa zehnfache Downlink- und über zwanzigfache Uplink-Kapazität gegenüber den bisherigen V2-Mini-Satelliten\footnote{\url{https://www.lightreading.com/satellite/starship-completes-first-test-flight-with-starlink-v3-satellites}}.
     \item \textbf{Pro Start:} 60 V3-Satelliten je Starship-Flug, also etwa 60\,Tbit/s zusätzliche Netzkapazität -- mehr als das Zwanzigfache eines Falcon-9-Starts mit V2 Mini\footnote{\url{https://www.pcmag.com/news/spacex-offers-new-look-at-v3-starlink-satellite-for-gigabit-speeds}}.
-    \item \textbf{Aggregiert:} Derzeit sind knapp 11.000 Satelliten im Orbit. Als Ziel für V3 und die Folgegenerationen nennt SpaceX 100.000 Satelliten\footnote{Unternehmensgespräch SpaceX, August 2026. Deutschsprachige Übersetzung: \url{https://www.youtube.com/watch?v=Hl895UEbxBk}. Sinngemäße Wiedergabe; die Formulierungen entstammen einer Kanalübersetzung, nicht einem amtlichen Protokoll.}. Zehnfache Kapazität je Satellit bei etwa neunfacher Stückzahl ergibt eine Steigerung der Gesamtnetzkapazität in der Größenordnung von Faktor 100. Die Kapazität je Satellit ist spezifiziert und geflogen; die Gesamtzahl bleibt eine Zielgröße, deren Startkadenz betrieblich noch nicht nachgewiesen ist.
+    \item \textbf{Aggregiert:} Derzeit sind knapp 11.000 Satelliten im Orbit; als Ziel nennt SpaceX 100.000\footnote{Unternehmensgespräch SpaceX, August 2026. Deutschsprachige Übersetzung: \url{https://www.youtube.com/watch?v=Hl895UEbxBk}. Sinngemäße Wiedergabe; die Formulierungen entstammen einer Kanalübersetzung, nicht einem amtlichen Protokoll.}. Zehnfache Kapazität je Satellit bei etwa neunfacher Stückzahl ergibt eine Steigerung der Gesamtnetzkapazität in der Größenordnung von Faktor 100. Die Kapazität je Satellit ist spezifiziert und geflogen; die Gesamtzahl bleibt eine Zielgröße, deren Startkadenz betrieblich nicht nachgewiesen ist.
 \end{itemize}
 
-\noindent Diese Entwicklung entlastet LearniPedia nicht, sie bestätigt seine Bauweise. Cloudflare rechnet damit, dass KI-Datenverkehr binnen fünf Jahren rund tausendmal größer sein wird als der von Menschen erzeugte Internetverkehr. Wer künftig Bandbreite braucht, konkurriert also mit Maschinen. Eine Plattform, die pro Lernenden Kilobit statt Megabit benötigt, gewinnt in diesem Umfeld an relativer Robustheit.
-
-\noindent Für LearniPedia ist dieser Wettlauf strategisch irrelevant, und genau darin liegt der Vorsprung:
+\noindent Diese Entwicklung entlastet LearniPedia nicht, sie bestätigt seine Bauweise. Cloudflare rechnet damit, dass KI-Datenverkehr binnen fünf Jahren rund tausendmal größer sein wird als der von Menschen erzeugte Internetverkehr. Wer künftig Bandbreite braucht, konkurriert mit Maschinen. Eine Plattform, die pro Lernenden Kilobit statt Megabit benötigt, gewinnt an relativer Robustheit.
 
 \begin{itemize}[label=--]
-    \item \textbf{Die Rechenlast liegt auf dem Knoten, nicht auf der Leitung:} Weil das Sprachmodell lokal auf eigener Hardware arbeitet, überträgt die Leitung ausschließlich Text. Ein sokratischer Tutor-Dialog benötigt einige Kilobit pro Sekunde. Kein 4K-Vorlesungsstreaming, keine Cloud-IDE im Browser, kein permanenter Telemetrie-Rückkanal.
-    \item \textbf{Lauffähig auf dem, was vorhanden ist:} Gedrosselter Mobilfunk, ein geteilter Dorfanschluss, ein Satellitenlink, im Extremfall ein lokales Mesh-Netz. LearniPedia ist betriebsbereit, bevor der Bagger anrückt, und bleibt betriebsbereit, wenn er nie kommt.
-    \item \textbf{Redundanz statt Technologie-Monokultur:} Glasfaser, Mobilfunk und LEO-Satellit sind austauschbare Zulieferer, keine Abhängigkeiten. Der Ausfall eines Pfades bedeutet Umzug eines Knotens, nicht Stillstand des Systems.
-    \item \textbf{Kein Ersatz eines Monopols durch ein anderes:} Je überlegener die Satellitenkapazität wird, desto größer die Versuchung, sich auf sie zu verlassen. Wir tun es nicht -- und die Zielsetzung des Anbieters selbst ist das Argument dafür: Musk hält es für möglich, dass langfristig über 90\,\% des gesamten Internetverkehrs über Starlink laufen\footnote{Unternehmensgespräch SpaceX, August 2026.}. Genau diese Konzentration ist das Risiko, nicht die Lösung. Ein privat kontrollierter Dienst ist ebenso abschaltbar wie jede Cloud-API, und die Bodenstationen hängen ihrerseits an terrestrischer Glasfaser. Satellit ist für uns ein Ausweichpfad, niemals ein Fundament, sonst höhlen wir Säule I dieses Dokuments selbst aus.
+    \item \textbf{Die Rechenlast liegt auf dem Knoten, nicht auf der Leitung:} Weil das Sprachmodell lokal arbeitet, überträgt die Leitung ausschließlich Text. Kein 4K-Vorlesungsstreaming, keine Cloud-IDE im Browser, kein permanenter Telemetrie-Rückkanal.
+    \item \textbf{Lauffähig auf dem, was vorhanden ist:} gedrosselter Mobilfunk, geteilter Dorfanschluss, Satellitenlink, im Extremfall lokales Mesh-Netz. Betriebsbereit, bevor der Bagger anrückt, und betriebsbereit, wenn er nie kommt.
+    \item \textbf{Redundanz statt Technologie-Monokultur:} Glasfaser, Mobilfunk und LEO-Satellit sind austauschbare Zulieferer. Der Ausfall eines Pfades bedeutet Umzug eines Knotens, nicht Stillstand.
+    \item \textbf{Kein Ersatz eines Monopols durch ein anderes:} Je überlegener die Satellitenkapazität, desto größer die Versuchung, sich auf sie zu verlassen. Wir tun es nicht -- und die Zielsetzung des Anbieters ist das Argument dafür: Musk hält es für möglich, dass langfristig über 90\,\% des Internetverkehrs über Starlink laufen\footnote{Unternehmensgespräch SpaceX, August 2026.}. Genau diese Konzentration ist das Risiko. Ein privat kontrollierter Dienst ist ebenso abschaltbar wie jede Cloud-Schnittstelle, und die Bodenstationen hängen ihrerseits an terrestrischer Glasfaser. Satellit ist ein Ausweichpfad, niemals ein Fundament.
 \end{itemize}
 
-\noindent Wer Bildung an Infrastruktur-Großprojekte koppelt, wartet Jahrzehnte. Wer sie auf minimale Bandbreite und lokale Rechenleistung auslegt, ist heute weltweit erreichbar.
-
-\section{Der EU-KI-Act: Nicht von der Technik überholt, sondern politisch ausgebremst}
-Es wäre bequem zu behaupten, die technische Entwicklung habe den KI-Act überrollt. Wir argumentieren nicht mit falschen Fakten. Der Act ist bewusst technologieneutral gebaut: Er reguliert Anwendungszwecke und Verantwortlichkeiten, nicht Modellarchitekturen. Eine neue LLM-Generation macht ihn deshalb nicht gegenstandslos. Verzögert wurde er nicht von der Technik, sondern vom Gesetzgeber selbst -- der am 27.\,Juli 2026 in Kraft getretene „AI Omnibus“\footnote{\url{https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force}} verschiebt die Pflichten für Hochrisiko-Systeme nach Anhang III vom 2.\,August 2026 auf den 2.\,Dezember 2027, jene für eingebettete Systeme nach Anhang I auf August 2028\footnote{Übersicht der geänderten Fristen: \url{https://fpf.org/blog/the-ai-act-implementation-timeline-what-changes-under-the-ai-omnibus/}}.
+\section{Die EU-KI-Verordnung: nicht von der Technik überholt, sondern politisch ausgebremst}
+\label{sec:kiact}
+Es wäre bequem zu behaupten, die technische Entwicklung habe die KI-Verordnung überrollt. Wir argumentieren nicht mit falschen Fakten. Sie ist bewusst technologieneutral gebaut: Sie reguliert Anwendungszwecke und Verantwortlichkeiten, nicht Modellarchitekturen. Eine neue Modellgeneration macht sie nicht gegenstandslos. Verzögert wurde sie vom Gesetzgeber selbst -- der am 27.\,Juli 2026 in Kraft getretene „AI Omnibus“\footnote{\url{https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force}} verschiebt die Pflichten für Hochrisiko-Systeme des Anhangs~III der KI-Verordnung vom 2.\,August 2026 auf den 2.\,Dezember 2027, jene für eingebettete Systeme des Anhangs~I auf August 2028\footnote{Übersicht der geänderten Fristen: \url{https://fpf.org/blog/the-ai-act-implementation-timeline-what-changes-under-the-ai-omnibus/}}. In Deutschland führt seit Inkrafttreten des KI-Marktüberwachungs- und Innovationsförderungsgesetzes am 29.\,Juli 2026 die Bundesnetzagentur die nationale Aufsicht\footnote{\url{https://www.heise.de/en/news/AI-Act-Federal-Government-Sets-AI-Law-in-Motion-11173642.html}}.
 
 \subsection{Die unbequeme Tatsache, die wir offen benennen}
-Bildung ist in Anhang III Nummer 3 ausdrücklich als Hochrisiko-Bereich gelistet. Erfasst sind unter anderem die Bewertung von Lernergebnissen und die Bestimmung des angemessenen Bildungsniveaus einer Person\footnote{\url{https://artificialintelligenceact.eu/annex/3/}}. LearniPedia tut beides: über dynamische KI-Fachgespräche und über den Knowledge Graph. Wir sind damit aller Wahrscheinlichkeit nach Anbieter eines Hochrisiko-Systems. Der Open-Source-Charakter befreit uns davon nicht, denn die Ausnahme für frei verfügbare Modelle betrifft Anbieter von Allzweckmodellen, nicht Betreiber von Hochrisiko-Anwendungen. Wer das Gegenteil in ein Konzept schreibt, verliert seine Glaubwürdigkeit bei der ersten Prüfung.
+Bildung ist im Anhang~III Nummer~3 der KI-Verordnung ausdrücklich als Hochrisiko-Bereich gelistet, erfasst sind unter anderem die Bewertung von Lernergebnissen und die Bestimmung des angemessenen Bildungsniveaus einer Person\footnote{\url{https://artificialintelligenceact.eu/annex/3/}}. LearniPedia tut beides -- über dynamische Fachgespräche und über den Wissensgraph. Wir sind damit aller Wahrscheinlichkeit nach Anbieter eines Hochrisiko-Systems. Der Open-Source-Charakter befreit uns davon nicht, denn die Ausnahme für frei verfügbare Modelle betrifft Anbieter von Allzweckmodellen, nicht Betreiber von Hochrisiko-Anwendungen. Wer das Gegenteil in ein Konzept schreibt, verliert seine Glaubwürdigkeit bei der ersten Prüfung.
 
-\subsection{Warum LearniPedia den Act architektonisch übererfüllt}
-Konformität ist bei uns nicht nachträglich dokumentiert, sondern in die Bauweise eingelassen:
+\subsection{Warum die Architektur die Verordnung übererfüllt}
 \begin{itemize}[label=--]
     \item \textbf{Datenminimierung als Architektur, nicht als Prozess:} Es existieren keine personenbezogenen Daten, die missbraucht, geleakt oder herausgegeben werden könnten.
-    \item \textbf{Transparenz über das gesetzliche Maß hinaus:} Modellgewichte, System-Prompts und die vollständige Infrastruktur liegen öffentlich auf GitHub. Der Act verlangt Dokumentation gegenüber Behörden, wir liefern Nachprüfbarkeit gegenüber der Öffentlichkeit.
-    \item \textbf{Menschliche Aufsicht (Art.\,14):} Die Pädagogen als Didaktik-Lenker mit Audit-Funktion sind genau das geforderte Kontrollorgan, kein nachgelagertes Feigenblatt.
-    \item \textbf{Kein Profiling:} Es entstehen keine Herkunfts-, Verhaltens- oder Leistungsprofile über Sitzungen hinweg.
-    \item \textbf{Verbotene Praktiken sind konstruktiv ausgeschlossen:} Keine Emotionserkennung an Lernenden (Art.\,5\,(1)(f)), keine Prüfungsüberwachung. Die Guardrails blockieren Manipulationsversuche, ohne emotionale Zustände zu klassifizieren.
+    \item \textbf{Transparenz über das gesetzliche Maß hinaus:} Modellgewichte, System-Prompts und die vollständige Infrastruktur liegen öffentlich. Die Verordnung verlangt Dokumentation gegenüber Behörden; wir liefern Nachprüfbarkeit gegenüber der Öffentlichkeit.
+    \item \textbf{Menschliche Aufsicht (Art.~14):} Die Pädagogen als Didaktik-Lenker mit Audit-Funktion sind das geforderte Kontrollorgan, kein nachgelagertes Feigenblatt.
+    \item \textbf{Kein Profiling:} Keine Herkunfts-, Verhaltens- oder Leistungsprofile über Sitzungen hinweg.
+    \item \textbf{Verbotene Praktiken konstruktiv ausgeschlossen:} keine Emotionserkennung an Lernenden (Art.~5\,(1)(f)), keine Prüfungsüberwachung. Die Schutzfilter blockieren Manipulationsversuche, ohne emotionale Zustände zu klassifizieren.
 \end{itemize}
 
 \subsection{Unsere eigentliche Kritik: Regulierung als Burggraben}
-Wir wenden uns nicht gegen die Ziele des Act, sondern gegen seine Kostenstruktur. Konformitätsbewertung, CE-Kennzeichnung, Registrierung und Post-Market-Monitoring sind für die Compliance-Abteilung eines Konzerns eine Budgetzeile, für ein spendenfinanziertes Kollektiv existenzbedrohend. Regulierung, die nur von Monopolisten bezahlbar ist, schützt am Ende Monopole -- und genau das ist der Mechanismus, gegen den LearniPedia angetreten ist.
+Wir wenden uns nicht gegen die Ziele der Verordnung, sondern gegen ihre Kostenstruktur. Konformitätsbewertung, Kennzeichnung, Registrierung und Marktbeobachtung sind für die Compliance-Abteilung eines Konzerns eine Budgetzeile, für ein spendenfinanziertes Kollektiv existenzbedrohend. Regulierung, die nur von Monopolisten bezahlbar ist, schützt am Ende Monopole -- und genau das ist der Mechanismus, gegen den LearniPedia angetreten ist.
 
-\subsection{Offener Punkt, den wir nicht verschweigen}
-Die Protokollierungs- und Nachvollziehbarkeitspflichten für Hochrisiko-Systeme (Art.\,12) stehen in direkter Spannung zu unserer Zero-Knowledge-Architektur. Wir lösen diesen Konflikt nicht durch Ignorieren, sondern durch aggregierte, personenfrei geführte Audit-Protokolle -- und stellen die Frage bewusst zur öffentlichen Diskussion, statt sie bis zur ersten Aufsichtsanfrage zu vertagen.
+\subsection{Offener Punkt}
+Die Protokollierungs- und Nachvollziehbarkeitspflichten (Art.~12) stehen in direkter Spannung zur Zero-Knowledge-Architektur. Wir lösen den Konflikt nicht durch Ignorieren, sondern durch aggregierte, personenfrei geführte Audit-Protokolle -- und stellen die Frage öffentlich zur Diskussion.
 
-\section{Radikale Mehrsprachigkeit \& Aufbrechen lokaler Integrations-Hürden}
-Im Gegensatz zur europäischen Fixierung auf bürokratische Sprach- und Integrationsauflagen denkt LearniPedia Bildung global und funktional nach internationalem Vorbild. Was zählt, ist das Können.
+\section{Radikale Mehrsprachigkeit}
+Im Gegensatz zur Fixierung auf bürokratische Sprach- und Integrationsauflagen denkt LearniPedia Bildung funktional. Was zählt, ist das Können.
 \begin{itemize}
-    \item \textbf{Echtzeit-Übersetzung des Weltwissens:} Die genutzten freien Spitzen-LLMs beherrschen Dutzende Sprachen fließend. Ein Student kann komplexe Inhalte in seiner Muttersprache lernen, während das System parallel internationale Fachbegriffe vermittelt.
-    \item \textbf{Der unermüdliche Deutsch-Tutor:} Für Lernende, die die deutsche Sprache erlernen möchten, bietet die lokale KI einen Sprachlehrer mit unendlicher Geduld. Ohne Scham vor Fehlern, ohne überfüllte Integrationskurse und ohne Wartezeiten können Menschen weltweit Deutsch auf muttersprachlichem Niveau trainieren.
+    \item \textbf{Weltwissen in der Muttersprache:} Die genutzten freien Spitzenmodelle beherrschen Dutzende Sprachen. Komplexe Inhalte werden in der Muttersprache erschlossen, während parallel internationale Fachbegriffe vermittelt werden.
+    \item \textbf{Der unermüdliche Sprachtutor:} Für Lernende, die Deutsch erwerben wollen, steht ein Sprachlehrer mit unendlicher Geduld bereit -- ohne Scham vor Fehlern, ohne überfüllte Kurse, ohne Wartezeiten.
 \end{itemize}
 
-\section{Taktrate statt Prognose: Die Unabhängigkeit von staatlichen Zyklen}
-LearniPedia muss dem technischen Fortschritt in dessen eigenem Tempo folgen können. Genau das ist an staatliche Bildungsverwaltung strukturell nicht anschlussfähig -- und dieser Befund braucht keine Zukunftsprognose, um zu tragen.
+\section{Taktrate statt Prognose}
+LearniPedia muss dem technischen Fortschritt in dessen Tempo folgen können. Genau das ist an staatliche Bildungsverwaltung strukturell nicht anschlussfähig -- und dieser Befund braucht keine Zukunftsprognose.
 
 \subsection{Eine Zahl, die wir bewusst nicht verwenden}
 Es kursiert die Behauptung, KI werde ihre Intelligenz bis Ende 2027 um den Faktor einer Milliarde steigern. Diese Zahl verwenden wir nicht, weil sie zwei getrennte Aussagen vermischt. Im SpaceX-Unternehmensgespräch vom August 2026 sagt Elon Musk zweierlei:
 \begin{itemize}[label=--]
-    \item \textbf{Zur Intelligenz:} Die \textit{Menge} digitaler Intelligenz werde jene biologischer Intelligenz voraussichtlich um mehr als den Faktor einer Billion übersteigen; der Faktor einer Milliarde sei die vergleichsweise sichere Schätzung. Begründet wird das über die nutzbar gemachte Energie der Sonne, ausdrücklich im Rahmen der Kardaschow-Skala. \textbf{Ein Datum nennt er dafür nicht.} Es handelt sich um einen zivilisatorischen Zeithorizont, nicht um eine Jahresfrist.
+    \item \textbf{Zur Intelligenz:} Die \textit{Menge} digitaler Intelligenz werde jene biologischer Intelligenz voraussichtlich um mehr als den Faktor einer Billion übersteigen; der Faktor einer Milliarde sei die vergleichsweise sichere Schätzung. Begründet wird das über die nutzbar gemachte Energie der Sonne, ausdrücklich im Rahmen der Kardaschow-Skala. \textbf{Ein Datum nennt er dafür nicht.} Es ist ein zivilisatorischer Zeithorizont, keine Jahresfrist.
     \item \textbf{Zu Ende 2027:} Angestrebt sind 10\,Gigawatt KI-Rechenleistung, etwa das Zehnfache des bisherigen Aufbaus, verknüpft mit einer Umsatzerwartung von 300 bis 500 Milliarden Dollar jährlich\footnote{Unternehmensgespräch SpaceX, August 2026; Berichterstattung: \url{https://www.teslarati.com/spacexs-next-trillion-dollar-bet-has-nothing-to-do-with-rockets-musk-tells-staff/}}. Das ist eine Kapazitäts- und Umsatzgröße, keine Intelligenzkennzahl.
 \end{itemize}
 
-\noindent Aus beidem zusammen wird gelegentlich „Faktor Milliarde bis Ende 2027“. Diese Verknüpfung stammt nicht von Musk. Hinzu kommt die Belastbarkeit solcher Fristen generell: Im April 2024 wurde übermenschliche KI „für nächstes Jahr“ angekündigt\footnote{\url{https://www.theguardian.com/technology/2024/apr/09/elon-musk-predicts-superhuman-ai-will-be-smarter-than-people-next-year}}.
-
-Vor allem aber: Intelligenz hat keine Maßeinheit. Rechenleistung lässt sich in Größenordnungen angeben, Fähigkeit skaliert nicht linear mit ihr. Ein Multiplikator ohne Einheit ist Rhetorik, kein Argument. Ein Bildungskonzept, das seine Existenzberechtigung auf die Prognose eines einzelnen Unternehmers stützt, wird mit dieser Prognose fallen.
+\noindent Aus beidem zusammen wird gelegentlich „Faktor Milliarde bis Ende 2027“. Diese Verknüpfung stammt nicht von Musk. Hinzu kommt die Belastbarkeit solcher Fristen: Im April 2024 wurde übermenschliche KI „für nächstes Jahr“ angekündigt\footnote{\url{https://www.theguardian.com/technology/2024/apr/09/elon-musk-predicts-superhuman-ai-will-be-smarter-than-people-next-year}}. Vor allem aber: Intelligenz hat keine Maßeinheit. Rechenleistung lässt sich in Größenordnungen angeben, Fähigkeit skaliert nicht linear mit ihr. Ein Multiplikator ohne Einheit ist Rhetorik, kein Argument. Ein Bildungskonzept, das seine Existenzberechtigung auf die Prognose eines einzelnen Unternehmers stützt, fällt mit dieser Prognose.
 
 \subsection{Das belastbare Argument: Zykluszeit}
-Der entscheidende Unterschied ist nicht Intelligenz, sondern Taktrate:
 \begin{itemize}[label=--]
-    \item \textbf{LearniPedia:} Ein Generationswechsel des Sprachmodells bedeutet neue Gewichte laden, System-Prompts nachziehen, Container neu starten. Zeithorizont: Tage.
-    \item \textbf{Staatliche Systeme:} Bildungsplanrevision, länderübergreifende Abstimmung, Schulbuchzulassung, Lehrkräftefortbildung, Beschaffungsrecht, Abschreibungszyklen auf Hardware. Zeithorizont: Jahre bis Legislaturperioden.
-    \item \textbf{Das Fork-Recht:} Biegt LearniPedia inhaltlich falsch ab, kann jede Gruppe die Plattform per Fork übernehmen und korrigieren. Ein staatliches Curriculum kennt keinen Fork, nur den Instanzenweg.
+    \item \textbf{LearniPedia:} Generationswechsel des Modells bedeutet Gewichte laden, System-Prompts nachziehen, Container neu starten. Zeithorizont: Tage.
+    \item \textbf{Staatliche Systeme:} Bildungsplanrevision, länderübergreifende Abstimmung, Schulbuchzulassung, Lehrkräftefortbildung, Beschaffungsrecht, Abschreibungszyklen. Zeithorizont: Jahre bis Legislaturperioden.
+    \item \textbf{Das Fork-Recht:} Biegt LearniPedia falsch ab, kann jede Gruppe die Plattform übernehmen und korrigieren. Ein staatliches Curriculum kennt keinen Fork, nur den Instanzenweg.
 \end{itemize}
-
-\noindent Diese Differenz ist keine Prognose, sondern beobachtbare Gegenwart. Sie bleibt bestehen, ganz unabhängig davon, wie schnell sich KI-Fähigkeiten tatsächlich entwickeln.
+\noindent Diese Differenz ist keine Prognose, sondern beobachtbare Gegenwart. Sie bleibt bestehen, unabhängig davon, wie schnell sich KI-Fähigkeiten entwickeln.
 
 \subsection{Was Skalierung pädagogisch bedeutet}
 Benjamin Bloom wies 1984 nach, dass Einzelbetreuung mit Mastery Learning die Leistung um bis zu zwei Standardabweichungen hebt -- der durchschnittlich tutorierte Lernende übertraf rund 98\,\% der konventionell unterrichteten Vergleichsgruppe. Bloom selbst hielt Eins-zu-eins-Betreuung für zu kostspielig, um sie gesellschaftlich im großen Maßstab zu tragen\footnote{Systematische Aufarbeitung: \url{https://nintil.com/bloom-sigma/}}. Genau diese Kostenschranke löst LearniPedia auf: Ein lokal betriebenes Sprachmodell liefert Einzelbetreuung zu Grenzkosten nahe null, in beliebiger Zahl, ohne Wartezeit.
 
-Redlicherweise: Die Effektstärke von zwei Sigma wird in der Forschung kontrovers diskutiert und dürfte niedriger liegen\footnote{Zur Debatte: \url{https://www.educationnext.org/two-sigma-tutoring-separating-science-fiction-from-science-fact/}}. Die Richtung des Befundes ist unstrittig, die exakte Größe nicht. Wir argumentieren mit der Richtung.
-
-\subsection{Wovon wir uns abgrenzen}
-Wir behaupten nicht, Universitäten seien im Sinne von Wissen und Intelligenz wertlos geworden. Diese Position wäre nicht nur falsch, sie würde LearniPedia selbst zerlegen. Universitäten \textit{erzeugen} Wissen -- über Labore, Experimente, Grundlagenforschung und Peer Review. Ohne diese Produktion gibt es keine Inhalte, die ein Sprachmodell vermitteln könnte; jedes LLM ist ein Verwerter fremder Erkenntnisleistung, kein Ersatz für sie.
-
-Was LearniPedia auflöst, ist enger und dafür präzise: das Monopol auf \textit{Wissensvermittlung} und die \textit{Zugangskontrolle} dazu. Die Knappheit, die den Hörsaal einst begründete -- wenige Fachleute, deren Zeit rationiert werden muss -- existiert bei der Vermittlung nicht mehr. In der Forschung existiert sie weiterhin, und deshalb bleibt auch die menschliche didaktische Aufsicht in diesem Projekt unverzichtbar.
+Redlicherweise: Die Effektstärke von zwei Sigma wird kontrovers diskutiert und dürfte niedriger liegen\footnote{Zur Debatte: \url{https://www.educationnext.org/two-sigma-tutoring-separating-science-fiction-from-science-fact/}}. Die Richtung des Befundes ist unstrittig, die exakte Größe nicht. Wir argumentieren mit der Richtung.
 
 \section{Wissen als permanent verfügbare Dienstleistung}
-Wenn sich KI-Fähigkeiten in Monaten statt in Jahrzehnten weiterentwickeln, lautet die entscheidende Frage nicht, ob Bildung mithält, sondern in welche \textit{Form} sie gebracht wird. Unsere Antwort: Wissensvermittlung hört auf, ein terminiertes und rationiertes Gut zu sein, und wird zu einer permanent verfügbaren Dienstleistung. Kein Semesterbeginn, keine Bewerbungsfrist, keine Zulassungsgrenze, keine Öffnungszeit, keine Warteliste.
+Wissensvermittlung hört auf, ein terminiertes und rationiertes Gut zu sein. Kein Semesterbeginn, keine Bewerbungsfrist, keine Zulassungsgrenze, keine Öffnungszeit, keine Warteliste.
 
 \subsection{Freiwilligkeit als Prinzip}
-Niemand muss sich weiterbilden. Wer es aber will, darf daran nicht gehindert werden. Damit kehrt LearniPedia die Beweislast um: Nicht der Lernende weist seine Berechtigung nach, sondern das System schuldet Verfügbarkeit. Konkret entfallen:
-\begin{itemize}[label=--]
-    \item Vorabnachweise jeder Art -- kein Abschluss, kein Numerus clausus, kein Eignungstest.
-    \item Alters-, Herkunfts- und Aufenthaltsprüfungen.
-    \item Zahlungsmittel und damit jede finanzielle Selektion.
-    \item Sprachvoraussetzungen, da Inhalte in der Muttersprache erschlossen werden können.
-    \item Wartezeiten, weil Betreuungskapazität nicht personengebunden ist.
-\end{itemize}
+\label{sec:freiwilligkeit}
+Niemand muss sich weiterbilden. Wer es aber will, darf nicht gehindert werden. Damit kehrt LearniPedia die Beweislast um: Nicht der Lernende weist seine Berechtigung nach, sondern das System schuldet Verfügbarkeit. Konkret entfallen Vorabnachweise jeder Art, Alters-, Herkunfts- und Aufenthaltsprüfungen, Zahlungsmittel, Sprachvoraussetzungen und Wartezeiten.
 
 \subsection{Was Freiwilligkeit ausdrücklich nicht bedeutet}
 Der Satz „man muss nicht lernen“ beschreibt unsere Haltung zur Weiterbildung, nicht die Rechtslage für Kinder. In Deutschland gilt eine Schulbesuchspflicht, nicht lediglich eine Bildungspflicht; Hausunterricht als Regelalternative ist in allen sechzehn Ländern untersagt und diese Praxis ist gerichtlich bestätigt\footnote{Überblick zur Rechtslage: \url{https://www.sueddeutsche.de/politik/homeschooling-schulpflicht-deutschland-afd-bildung-li.3461526}}.
@@ -190,45 +461,55 @@ Der Satz „man muss nicht lernen“ beschreibt unsere Haltung zur Weiterbildung
 LearniPedia ist deshalb \textbf{kein Ersatz für den Schulbesuch und kein Werkzeug zu dessen Umgehung}. Wer es so einsetzt, riskiert Bußgelder und familiengerichtliche Verfahren -- und dieses Risiko trägt die Familie, nicht das Projekt. Wir benennen das aus Verantwortung gegenüber unseren Nutzenden, nicht aus Rücksicht auf Behörden. Unser Feld ist die Ergänzung zum Unterricht, die Erwachsenen- und Weiterbildung, das nachschulische Lernen und der weltweite Zugang für alle, die gar keine Bildungseinrichtung erreichen.
 
 \subsection{Warum Verfügbarkeit allein nicht genügt}
+\label{sec:mooc}
 Der stärkste Einwand gegen dieses Konzept ist empirisch belegt, deshalb führen wir ihn selbst an. MOOCs boten ab 2012 genau das, was hier versprochen wird: freien Zugang zu Lehrveranstaltungen auf Spitzenniveau. Die Abschlussquoten blieben im Bereich von 5 bis 10\,\% und begünstigten Teilnehmende mit bereits vorhandener Hochschulbildung\footnote{\url{https://link.springer.com/10.1186/s12909-015-0344-z}}; die Mehrheit der Nutzenden war berufstätig und akademisch vorgebildet\footnote{\url{https://files.eric.ed.gov/fulltext/EJ1045991.pdf}}. Zugang allein hat die soziale Selektion nicht gebrochen, sondern reproduziert.
 
-Der Unterschied liegt nicht in der Verfügbarkeit, sondern in der Interaktionsform. Ein MOOC ist eine Aufzeichnung, also ein Sendekanal. LearniPedia ist ein Dialog. Der in Abschnitt zuvor beschriebene Tutoreneffekt entsteht aus Adaptivität: ein Gegenüber, das nachfragt, das Niveau anpasst, Fehlvorstellungen erkennt und beliebig oft ohne Ungeduld wiederholt. Wer diesen Unterschied nicht macht, verspricht 2026 lediglich erneut, was 2012 versprochen wurde.
+Der Unterschied liegt nicht in der Verfügbarkeit, sondern in der Interaktionsform. Ein MOOC ist eine Aufzeichnung, also ein Sendekanal. LearniPedia ist ein Dialog. Der Tutoreneffekt entsteht aus Adaptivität: ein Gegenüber, das nachfragt, das Niveau anpasst, Fehlvorstellungen erkennt und beliebig oft ohne Ungeduld wiederholt. Wer diesen Unterschied nicht macht, verspricht 2026 lediglich erneut, was 2012 versprochen wurde.
 
-Redlicherweise: Ob Adaptivität ausreicht, um Motivations- und Milieubarrieren zu überwinden, ist nicht erwiesen. Wir behaupten es nicht, wir messen es -- anonymisiert und aggregiert, mit öffentlich einsehbarer Methodik.
+Redlicherweise: Ob Adaptivität ausreicht, um Motivations- und Milieubarrieren zu überwinden, ist nicht erwiesen. Wir behaupten es nicht, wir messen es. Hinzu kommt die stille Eintrittsbarriere, an der MOOCs ebenfalls scheiterten: digitale Vorerfahrung. Wer nicht weiß, was ein Zugang ist, erreicht den Tutor nicht. Deshalb sind die Vermittler aus Teil~III keine Ergänzung, sondern Teil der Konstruktion.
 
 \subsection{Permanente Verfügbarkeit und Selbstbegrenzung}
-Die permanente Verfügbarkeit und das tägliche Zeitbudget aus Säule IV widersprechen sich nur scheinbar. Verfügbarkeit ist eine Eigenschaft des Systems, Begrenzung eine Entscheidung des Nutzenden. Die Grenze setzt der Lernende selbst, nicht die Institution. Genau darin unterscheidet sich Selbstregulation von Rationierung.
+Permanente Verfügbarkeit und tägliches Zeitbudget widersprechen sich nur scheinbar. Verfügbarkeit ist eine Eigenschaft des Systems, Begrenzung eine Entscheidung des Nutzenden. Die Grenze setzt der Lernende, nicht die Institution. Genau darin unterscheidet sich Selbstregulation von Rationierung.
 
-\section{Die Rolle der Pädagogen (Didaktische Leitplanken)}
-Die KI liefert die Skalierung, aber menschliche Pädagogen bilden das ethische und methodische Kontrollorgan. Sie agieren als \textbf{Didaktik-Lenker}: Sie optimieren die System-Prompts auf GitHub für die Lehr-Persönlichkeit der KI, strukturieren barrierefreie Lernpfade im Knowledge Graph und führen anonymisierte Qualitäts-Audits der KI-Antworten durch.
+\section{Die Rolle der Pädagogen}
+Die KI liefert die Skalierung, aber menschliche Pädagogen bilden das ethische und methodische Kontrollorgan. Sie optimieren die System-Prompts für die Lehr-Persönlichkeit der KI, strukturieren barrierefreie Lernpfade im Wissensgraph und führen anonymisierte Qualitäts-Audits der Antworten durch.
 
-Dass diese Rolle mit steigender Modellleistung wichtiger und nicht überflüssig wird, ist keine Position von KI-Skeptikern. Elon Musk formuliert im SpaceX-Unternehmensgespräch selbst, man werde KI letztlich nicht kontrollieren können, weil sie zu intelligent dafür sei -- und leitet daraus ab, dass es entscheidend darauf ankomme, welche Werte und Überzeugungen man ihr beim Training mitgibt, vergleichbar mit der Erziehung eines hochbegabten Kindes. Genau diese Prägung ist bei LearniPedia keine Firmenentscheidung hinter verschlossenen Türen, sondern liegt als versionierter, öffentlich überprüfbarer Text im Repository. Wer die Lehr-Persönlichkeit der KI verändern will, hinterlässt einen Commit.
+Dass diese Rolle mit steigender Modellleistung wichtiger und nicht überflüssig wird, ist keine Position von KI-Skeptikern. Elon Musk formuliert im SpaceX-Unternehmensgespräch selbst, man werde KI letztlich nicht kontrollieren können, weil sie zu intelligent dafür sei -- und leitet daraus ab, dass es entscheidend darauf ankomme, welche Werte man ihr beim Training mitgibt, vergleichbar mit der Erziehung eines hochbegabten Kindes. Genau diese Prägung ist bei LearniPedia keine Firmenentscheidung hinter verschlossenen Türen, sondern liegt als versionierter, öffentlich überprüfbarer Text im Repository. Wer die Lehr-Persönlichkeit der KI verändern will, hinterlässt einen Commit.
 
 \section{LaTeX als Textsatz-Standard}
-Alle Texte von LearniPedia werden in LaTeX gesetzt. Das ist keine Stilfrage, sondern folgt zwingend aus den bisherigen Säulen:
+Alle Texte von LearniPedia werden in LaTeX gesetzt. Das folgt aus den vorstehenden Grundsätzen:
 \begin{itemize}[label=--]
-    \item \textbf{Lizenzfrei und anbieterunabhängig:} LaTeX kostet nichts, gehört niemandem und läuft auf jeder Plattform. Ein Lernender in einer Region ohne Kaufkraft benötigt keine Office-Lizenz, um an Inhalten mitzuarbeiten.
-    \item \textbf{Quelltext statt Binärformat:} LaTeX-Dateien sind reiner Text. Sie lassen sich versionieren, zeilenweise vergleichen und forken -- genau die Eigenschaften, die Säule III für die Infrastruktur fordert, angewandt auf Inhalte. Jede Änderung an einem Lehrtext ist nachvollziehbar und einer Person zuordenbar.
-    \item \textbf{Formelsatz als Betriebsvorteil:} Sprachmodelle geben Mathematik nativ in LaTeX aus. Zwischen Tutor-Antwort und gesetztem Lehrmaterial liegt damit kein Konvertierungsschritt, der Fehler einführen könnte.
+    \item \textbf{Lizenzfrei und anbieterunabhängig:} LaTeX kostet nichts, gehört niemandem und läuft auf jeder Plattform. Niemand benötigt eine Office-Lizenz, um mitzuarbeiten.
+    \item \textbf{Quelltext statt Binärformat:} LaTeX-Dateien sind reiner Text. Sie lassen sich versionieren, zeilenweise vergleichen und forken -- die Eigenschaften, die wir für Infrastruktur fordern, angewandt auf Inhalte. Jede Änderung ist nachvollziehbar und zuordenbar.
+    \item \textbf{Formelsatz als Betriebsvorteil:} Sprachmodelle geben Mathematik nativ in LaTeX aus. Zwischen Tutor-Antwort und gesetztem Lehrmaterial liegt kein fehleranfälliger Konvertierungsschritt.
     \item \textbf{Langlebigkeit:} Reiner Text bleibt in Jahrzehnten lesbar. Proprietäre Binärformate sind an die Lebensdauer ihres Herstellers gebunden.
 \end{itemize}
 
 \subsection{Barrierefreiheit: Möglichkeit und offene Aufgabe}
-Historisch war der Einwand gegen LaTeX berechtigt: Erzeugte PDFs waren untagged und für Screenreader kaum erschließbar, mathematische Inhalte praktisch gar nicht. Diese Einschränkung ist seit 2026 aufgehoben. Das LaTeX-Projekt kann auf Basis von PDF\,2.0 automatisch PDF-Dateien erzeugen, die dem Standard PDF/UA-2 entsprechen und deren STEM-Inhalte einschließlich Mathematik tatsächlich zugänglich sind\footnote{\url{https://latex-project.org/news/2026/03/05/PDFA-press/}}.
+Historisch war der Einwand gegen LaTeX berechtigt: Erzeugte PDFs waren untagged und für Screenreader kaum erschließbar, mathematische Inhalte praktisch gar nicht. Diese Einschränkung ist seit 2026 aufgehoben. Das LaTeX-Projekt kann auf Basis von PDF\,2.0 automatisch Dateien erzeugen, die dem Standard PDF/UA-2 entsprechen und deren STEM-Inhalte einschließlich Mathematik zugänglich sind\footnote{\url{https://latex-project.org/news/2026/03/05/PDFA-press/}}.
 
-Redlicherweise ist dies für dieses Dokument noch keine erreichte Eigenschaft, sondern eine Aufgabe: Der vorliegende Satz erfolgte mit TeX\,Live\,2022 und erzeugt noch kein getaggtes PDF. Zudem gehört das hier verwendete Paket \texttt{titlesec} zu jenen, für die Tagging-Unterstützung erst über Vorlagen bereitgestellt wird\footnote{Statusübersicht: \url{https://latex3.github.io/tagging-project/}}. Konkrete Schritte sind daher die Aktualisierung der Toolchain, die Ablösung nicht tagging-fähiger Pakete und eine Validierung gegen PDF/UA-2. Solange das nicht geschehen ist, erheben wir keinen Barrierefreiheitsanspruch für unsere PDF-Ausgabe. Zusätzlich wird jeder Text über HTML ausgegeben, da Screenreader und Vergrößerungssoftware damit verlässlicher umgehen als mit jedem PDF.
+Redlicherweise ist dies für dieses Dokument noch keine erreichte Eigenschaft, sondern eine Aufgabe: Der vorliegende Satz erzeugt noch kein getaggtes PDF, und das hier verwendete Paket \texttt{titlesec} gehört zu jenen, für die Tagging-Unterstützung erst über Vorlagen bereitgestellt wird\footnote{Statusübersicht: \url{https://latex3.github.io/tagging-project/}}. Konkrete Schritte sind die Aktualisierung der Toolchain, die Ablösung nicht tagging-fähiger Pakete und eine Validierung gegen PDF/UA-2. Solange das nicht geschehen ist, erheben wir keinen Barrierefreiheitsanspruch für unsere PDF-Ausgabe. Zusätzlich wird jeder Text über HTML ausgegeben, da Screenreader und Vergrößerungssoftware damit verlässlicher umgehen als mit jedem PDF.
 
 \subsection{Mitarbeit ohne Installation}
-Der häufigste Einwand gegen LaTeX ist nicht die Syntax, sondern die Einrichtung. Eine TeX-Distribution herunterzuladen und einzurichten ist für viele die eigentliche Abbruchstelle. LearniPedia bietet deshalb von Anfang an einen browserbasierten Einstieg über Overleaf an: ein Klick öffnet das jeweilige Dokument kompilierfertig, ohne Installation, ohne Konfiguration, auf jedem Gerät.
+Der häufigste Einwand gegen LaTeX ist nicht die Syntax, sondern die Einrichtung. LearniPedia bietet deshalb einen browserbasierten Einstieg über Overleaf an: ein Klick öffnet das Dokument kompilierfertig, ohne Installation, auf jedem Gerät.
 
-Zwei Einschränkungen benennen wir dabei selbst. Erstens ist die Rückschreibefunktion nach Git bei Overleaf zahlungspflichtig; der Weg zurück ins Repository läuft daher zunächst über Datei-Download und Pull Request. Zweitens ist \texttt{overleaf.com} ein kommerziell betriebener Dienst und steht damit in Spannung zu Säule I. Wir nutzen ihn als niedrigschwelligen Einstieg, nicht als Fundament. Da Overleaf selbst Open Source ist und sich als Community Edition containerisiert betreiben lässt, ist die eigene Instanz auf unseren Knoten das erklärte Ziel -- konsistent mit der bereits bestehenden Docker-Architektur.
+Zwei Einschränkungen benennen wir selbst. Erstens ist die Rückschreibefunktion nach Git bei Overleaf zahlungspflichtig; der Weg zurück ins Repository läuft daher über Datei-Download und Pull Request. Zweitens ist \texttt{overleaf.com} ein kommerziell betriebener Dienst und steht damit in Spannung zu unserem Unabhängigkeitsgrundsatz. Wir nutzen ihn als niedrigschwelligen Einstieg, nicht als Fundament. Da Overleaf selbst Open Source ist und sich containerisiert betreiben lässt, ist die eigene Instanz auf unseren Knoten das erklärte Ziel.
 
-\subsection{LaTeX als erste Lerneinheit -- als Angebot, nicht als Bedingung}
-LaTeX eignet sich hervorragend als erste Lerneinheit. Wer es beherrscht, lernt nebenbei strukturiertes Denken, Trennung von Inhalt und Form, Versionierung und Reproduzierbarkeit -- und erwirbt die Verkehrssprache des wissenschaftlichen Publizierens, was einen unmittelbaren berufspraktischen Wert hat. Zugleich ist es die Fähigkeit, mit der Lernende von Konsumenten zu Mitautoren von LearniPedia werden.
+\subsection{LaTeX als erste Lerneinheit -- Angebot, nicht Bedingung}
+LaTeX eignet sich hervorragend als erste Lerneinheit. Wer es beherrscht, lernt nebenbei strukturiertes Denken, Trennung von Inhalt und Form, Versionierung und Reproduzierbarkeit -- und erwirbt die Verkehrssprache des wissenschaftlichen Publizierens. Zugleich ist es die Fähigkeit, mit der Lernende von Konsumenten zu Mitautoren werden.
 
-Genau deshalb darf es keine Eintrittsbedingung sein. LaTeX hat eine steile Einstiegshürde. Würden wir es Lernenden voranstellen, errichteten wir vor dem Wissen genau jene Schranke, die dieses Projekt abschaffen will, und träfen damit zuerst die Gruppe mit der geringsten Bildungsnähe. LaTeX ist deshalb die erste \textit{angebotene} Lerneinheit und niemals eine Voraussetzung: Lesen und Lernen funktioniert ohne jede Kenntnis davon, Mitschreiben belohnt sie.
+Genau deshalb darf es keine Eintrittsbedingung sein. LaTeX hat eine steile Einstiegshürde. Würden wir es voranstellen, errichteten wir vor dem Wissen genau jene Schranke, die dieses Projekt abschaffen will, und träfen zuerst die Gruppe mit der geringsten Bildungsnähe. LaTeX ist deshalb die erste \textit{angebotene} Lerneinheit und niemals eine Voraussetzung: Lesen und Lernen funktioniert ohne jede Kenntnis davon, Mitschreiben belohnt sie.
 
-\section{Einladung an die Erstunterstützer (Call to Action)}
-Die technische Basis steht. Was wir jetzt brauchen, ist die Reichweite der digitalen Speerspitze und das Fachwissen progressiver Köpfe. Wir suchen pädagogische Pioniere für das didaktische Regelwerk, Tech-Aktivisten für dezentrale Rechenknoten und Multiplikatoren, die dieser Bewegung eine unüberhörbare Stimme verleihen.
+\section{Änderungsstand dieses Dokuments}
+Diese Fassung ist eine vollständige Neufassung. Gegenüber der Erstveröffentlichung neu oder wesentlich geändert:
+\begin{itemize}[label=--]
+    \item \textbf{Teil~I} fasst das Credo erstmals als eigenständige, fußnotenfreie Grundlage.
+    \item \textbf{Teil~II} ergänzt die zuvor fehlende Governance-Schicht nach dem Vorbild der Wikipedia-Verfahren, einschließlich der Trennung von Träger und Inhalt sowie der Grenzen dieser Analogie.
+    \item \textbf{Teil~III} ersetzt die sechs „unumstößlichen Säulen“ durch sieben Systemschichten und ergänzt Wissensmodell, Inhalts-Lebenszyklus und die Bewertungsschicht.
+    \item \textbf{Teil~IV} ersetzt die frühere Aussage, man strebe „keine träge staatliche Akkreditierung“ an, durch eine belegte Begründung und ein ausgearbeitetes Alternativmodell -- samt der ausdrücklichen Grenze bei reglementierten Berufen.
+    \item \textbf{Teil~V} bündelt die offenen Punkte, die zuvor über den Text verstreut waren.
+    \item \textbf{Teil~VI} ersetzt den allgemeinen Aufruf durch adressatenspezifische Anliegen mit jeweils einem konkreten ersten Schritt.
+    \item Die Argumentation der Erstfassung ist vollständig erhalten und in diesen Anhang verschoben.
+\end{itemize}
 
 \end{document}

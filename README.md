@@ -12,7 +12,7 @@ auf dezentraler Infrastruktur ohne Abhängigkeit von kommerziellen Cloud-Anbiete
 
 | Datei | Beschreibung |
 |---|---|
-| `Konzept.tex` | Das vollständige Manifest als LaTeX-Quelle |
+| `Konzept.tex` | Das vollständige Manifest als LaTeX-Quelle (Credo, Struktur, Aufruf) |
 | `Konzept.pdf` | Gesetzte Fassung, direkt lesbar ohne TeX-Installation |
 
 Zusätzlich liegt jede veröffentlichte Fassung als
@@ -50,25 +50,71 @@ pdflatex Konzept.tex
 pdflatex Konzept.tex   # zweiter Durchlauf für Fußnoten- und Link-Referenzen
 ```
 
+## Aufbau des Manifests
+
+Das Konzept ist in sechs Teile plus Anhang gegliedert:
+
+| Teil | Inhalt |
+|---|---|
+| I | **Credo** — sieben Sätze, die nicht verhandelbar sind |
+| II | **Wikipedia-Grundstrukturen** — Belegpflicht, Versionsgeschichte, Rollen mit entziehbarer Macht, Schiedsverfahren, Trennung von Träger und Inhalt |
+| III | **Die sieben Schichten** — Wissensmodell, Inhalts-Lebenszyklus, Didaktik, Bewertung, Nachweis, Technik, Institution |
+| IV | **Anerkennung ohne Akkreditierung** — der Weg zu weltweit tragfähigen Nachweisen ohne staatliche Zulassung |
+| V | **Was wir nicht gelöst haben** — Engstellen und Zielkonflikte |
+| VI | **Aufruf** — adressatenspezifisch, mit je einem konkreten ersten Schritt |
+| Anhang | Begründungen, Quellen und die Schwachstellen der Argumentation |
+
 ## Grundsätze
 
 - **Unabhängigkeit von Big Tech** — frei verfügbare Sprachmodelle auf eigener Hardware
 - **Zero-Knowledge-Datenschutz** — keine Klarnamen, keine IP-Adressen, keine Profile
 - **Infrastructure as Code** — vollständig containerisiert, an jedem Ort neu startbar
 - **Frustrationsloses Lernen** — keine Noten, kein Zeitkorsett, selbstgesetzte Ziele
-- **Spendenfinanzierung** — dauerhaft kostenfreie Nutzung
+- **Spendenfinanzierung** — dauerhaft kostenfreie Nutzung, mit Deckelung des Anteils
+  einzelner Geber und Ablehnungsrecht für Mittel mit inhaltlichen Erwartungen
+- **Gewaltenteilung** — der Träger stellt Infrastruktur bereit und hat keine
+  inhaltliche Weisungsbefugnis. Wer Server bezahlt, bestimmt nicht, was gelehrt wird
+- **Belegpflicht** — keine Quelle, keine Lehraussage. Zugleich unser Gegenmittel
+  gegen Halluzination
+- **Anerkennung durch Nachprüfbarkeit** — wir bitten nicht um Vertrauen, sondern
+  machen Nachprüfen billiger als Vertrauen
 
 ## Belegte Aussagen
 
-Das Manifest stützt sich auf zitierte Quellen und benennt offene Punkte ausdrücklich,
-darunter die Einordnung von Bildungs-KI als Hochrisiko-System nach Anhang III des
-EU-KI-Acts und die Spannung zwischen Protokollierungspflichten und der
-Zero-Knowledge-Architektur. Kritik und Korrekturen sind willkommen — bitte als Issue.
+Das Manifest stützt sich auf zitierte Quellen und benennt offene Punkte ausdrücklich.
+Teil V listet sie gebündelt, darunter:
+
+- Prüfungsintegrität unter KI-Bedingungen — ohne glaubwürdige Prüfung kein
+  anerkannter Nachweis
+- Anonymität gegen Zertifizierbarkeit — anonym lernen geht, anonym zertifizieren nicht
+- die Einordnung von Bildungs-KI als Hochrisiko-System nach Anhang III der
+  EU-KI-Verordnung und die Spannung zwischen Art. 12 und der Zero-Knowledge-Architektur
+- Anonymität gegen Kinder- und Jugendschutz
+
+Ausdrücklich außer Reichweite bleiben **reglementierte Berufe** (Medizin, Pharmazie,
+Rechtsanwaltschaft, Lehramt, Pflege, prüfende Ingenieurtätigkeit, Luftfahrt). Diese
+Fächer lassen sich hier lernen — den Berufszugang bescheinigt LearniPedia nicht.
+Ebenso ist das Projekt **kein Ersatz für den Schulbesuch**.
+
+Kritik und Korrekturen sind willkommen — bitte als Issue. Die wirksamste Form der
+Mitarbeit ist der begründete Widerspruch zu Teil V.
 
 ## Mitwirken
 
-Gesucht sind pädagogische Pioniere für das didaktische Regelwerk, Tech-Aktivisten für
-dezentrale Rechenknoten und Multiplikatoren für die Reichweite.
+Teil VI des Manifests nennt für jede Gruppe einen konkreten ersten Schritt:
+
+- **Pädagogen und Fachwissenschaftler** — Didaktik-Lenker, Fachreviewer, Prüfer
+- **Fachgesellschaften** — Mitzeichner eines gemeinsamen Kompetenzstandards,
+  nicht Zulassungsstelle
+- **Bildungsforschung** — Partner für die Wirksamkeitsmessung, mit der Freiheit,
+  negative Befunde zu veröffentlichen
+- **Technische Mitwirkende** — dezentrale Rechenknoten, Nachweisschicht auf offenen
+  Standards, Barrierefreiheit, Offline-Fähigkeit
+- **Vermittler** — Bibliotheken, Volkshochschulen, Schulen und Hilfsorganisationen
+  als Orte für alle ohne Gerät, Anschluss oder digitale Vorerfahrung
+- **Unterstützer** — unter den oben genannten Bedingungen
+- **Kritiker** — wer eine Stelle aus Teil V zum Einsturz bringt, trägt mehr bei
+  als jede zustimmende Weiterleitung
 
 ## Lizenz
 
