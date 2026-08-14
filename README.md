@@ -67,7 +67,9 @@ Das Konzept ist in sechs Teile plus Anhang gegliedert:
 ## Grundsätze
 
 - **Unabhängigkeit von Big Tech** — frei verfügbare Sprachmodelle auf eigener Hardware
-- **Zero-Knowledge-Datenschutz** — keine Klarnamen, keine IP-Adressen, keine Profile
+- **Datensparsamkeit als Bauweise** — keine Klarnamen, keine Speicherung von
+  IP-Adressen, keine sitzungsübergreifenden Profile. Die Registrierungsadresse
+  ist das einzige personenbezogene Datum und jederzeit löschbar
 - **Infrastructure as Code** — vollständig containerisiert, an jedem Ort neu startbar
 - **Frustrationsloses Lernen** — keine Noten, kein Zeitkorsett, selbstgesetzte Ziele
 - **Spendenfinanzierung** — dauerhaft kostenfreie Nutzung, mit Deckelung des Anteils
@@ -88,8 +90,12 @@ Teil V listet sie gebündelt, darunter:
   anerkannter Nachweis
 - Anonymität gegen Zertifizierbarkeit — anonym lernen geht, anonym zertifizieren nicht
 - die Einordnung von Bildungs-KI als Hochrisiko-System nach Anhang III der
-  EU-KI-Verordnung und die Spannung zwischen Art. 12 und der Zero-Knowledge-Architektur
+  EU-KI-Verordnung und die Spannung zwischen Art. 12 und der Datensparsamkeit
 - Anonymität gegen Kinder- und Jugendschutz
+- Fairnessnachweis gegen Datensparsamkeit — ein Bias-Audit braucht genau die
+  Merkmale, die die Architektur nicht erhebt
+- Portabilität gegen Vergessen — Fortschritt ist exportierbar, nach Aufgabe
+  eines Zugangs aber unwiederbringlich
 
 Ausdrücklich außer Reichweite bleiben **reglementierte Berufe** (Medizin, Pharmazie,
 Rechtsanwaltschaft, Lehramt, Pflege, prüfende Ingenieurtätigkeit, Luftfahrt). Diese
